@@ -1,0 +1,12 @@
+<div class="mx-auto w-fit">
+  @if(_authService.isAuthenticated())
+  {
+    <p>you are Authenticated</p>
+    <button (click)="logout()" class="px-2 py-1 rounded-lg bg-black text-white mx-auto">logout</button>
+  }
+  @else
+  {
+    <p>you are not Authenticated</p>
+  }
+  <button class="px-2 py-1 rounded-lg bg-black text-white mx-auto" (click)="refresh()">refresh</button>
+</div>

@@ -27,7 +27,7 @@ namespace Semsar_online.Services.Classes
         public async Task<AuthDTO> GetTokenAsync(LoginDTO model)
         {
             var user = await _userManager.FindByEmailAsync(model.Email);
-            if ( user is null || await _userManager.CheckPasswordAsync(user , model.Password))
+            if ( user is null || !await _userManager.CheckPasswordAsync(user , model.Password))
             {
                 return new AuthDTO() { Message = "Wrong email or password" };
             }
@@ -40,7 +40,8 @@ namespace Semsar_online.Services.Classes
                 Email = model.Email,
                 Username = user.UserName,
                 Token = new JwtSecurityTokenHandler().WriteToken(token),
-                Roles = roles.ToList()
+                Roles = roles.ToList(),
+                IsAuthenticated = true
             };
             if (user.RefreshTokens is not null && user.RefreshTokens.Any(x => x.IsActive))
             {
@@ -90,9 +91,9 @@ namespace Semsar_online.Services.Classes
 
         public async Task<AuthDTO> RegisterAsync(RegisterDTO model)
         {
-            if(await _userManager.FindByEmailAsync(model.Email) is null)
+            if(await _userManager.FindByEmailAsync(model.Email) is not null)
                 return new AuthDTO() { Message ="Email already exists" };
-            if(await _userManager.FindByNameAsync(model.Username) is null)
+            if(await _userManager.FindByNameAsync(model.Username) is not null)
                 return new AuthDTO() { Message ="Username already exists" };
 
             var user = new User()
@@ -159,7 +160,7 @@ namespace Semsar_online.Services.Classes
                 issuer: _jwt.Issuer,
                 audience: _jwt.Audience,
                 claims: claims,
-                expires: DateTime.Now.AddDays(_jwt.DurationInMinutes),
+                expires: DateTime.Now.AddMinutes(_jwt.DurationInMinutes),
                 signingCredentials: signingCredentials);
 
             return jwtSecurityToken;

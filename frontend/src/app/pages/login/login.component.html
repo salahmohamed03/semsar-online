@@ -1,1 +1,26 @@
-<p>login works!</p>
+<div class="w-full h-full bg-slate-300 py-10">
+  <form [formGroup]="loginForm" (ngSubmit)="LoginFormSubmit()"
+  class="p-3 w-96 h-fit mx-auto shadow-xl rounded-lg space-y-3 bg-slate-800" >
+    <!-- title -->
+    <h1 class="font-bold text-4xl text-slate-400">Login</h1>
+    <!-- user input -->
+    <div class="">
+      <label for="email" class="text-slate-400">Email</label>
+      <input type="email" id="email" formControlName="email" placeholder="examble@mail.com"
+       class="w-full h-10 border-2 border-gray-300 rounded-md p-2 mb-2" />
+       <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" class="text-red-400">
+        Enter a valid email
+      </div>
+       <label for="password" class="text-slate-400">password</label>
+      <input type="password" id="password" formControlName="password" placeholder=""
+       class="w-full h-10 border-2 border-gray-300 rounded-md p-2 mb-2" />
+       <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="text-red-400">
+        Enter a valid password
+      </div>
+    </div>
+    <!-- submit button -->
+    <button type="submit" class="w-full h-10 bg-slate-500  text-white rounded-md "
+    [disabled]="!loginForm.valid || !loginForm.dirty"
+    class="{{(!loginForm.valid || !loginForm.dirty)?'':'hover:bg-slate-600'}}">Login</button>
+  </form>
+</div>
