@@ -12,7 +12,7 @@ namespace Semsar_online.Models
         public string Comment { get; set; } = string.Empty;
         [Range(1, 5)]
         public int Rating { get; set; }
-        public DateTime ReviewDate { get; set; } = DateTime.UtcNow;
+        public DateTime ReviewDate { get; set; } = DateTime.Now;
 
         public User? User { get; set; }
         public Property? Property { get; set; }

@@ -5,10 +5,10 @@ import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { authInterceptor } from './Interceptors/auth.interceptor';
+import { tokenInterceptor } from './Interceptors/tokenInterceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [provideZoneChangeDetection({ eventCoalescing: true }),
      provideRouter(routes),
-     provideHttpClient(withInterceptors([ authInterceptor ]))]
-
+     provideHttpClient(withInterceptors([ authInterceptor,tokenInterceptor])),]
 };

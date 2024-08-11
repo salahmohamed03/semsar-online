@@ -1,5 +1,9 @@
+
+import { catchError } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { AuthService } from './../../Services/auth.service';
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-home',
@@ -10,14 +14,24 @@ import { Component } from '@angular/core';
 })
 export class HomeComponent {
 refresh() {
-    console.log(this._authService.isTokenExpired());
 }
-  _authService: AuthService;
-  constructor(private authService:AuthService) {
-    this._authService = authService
-  }
+  constructor(private authService:AuthService) { }
+  isLoggedIn():boolean{
+    return this.authService.getToken() != null;
+  };
   logout(){
-    this._authService.logout();
+    this.authService.logout();
   }
 
+  getRefreshToken() {
+    this.authService.getRefreshToken().subscribe(
+      {
+        next: (token) => {
+        },
+        error: (error) => {
+          console.error('Error:', error);
+        }
+      }
+    );
+  }
 }

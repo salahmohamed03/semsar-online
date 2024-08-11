@@ -1,25 +1,59 @@
-<div class="p-3 bg-slate-800 w-full h-20 flex flex-row justify-between">
+<div class="p-3 fixed bg-slate-800 w-full h-20 flex flex-row justify-between no-scrollbar z-10">
 
   <!-- logo -->
-  <a routerLink="/" class="m-2 text-3xl text-slate-400 flex flex-row items-end">
+  <a routerLink="/" class=" py-3 px-2 text-3xl text-slate-400 flex flex-row items-end">
     <img src="favicon.jpg" class="w-10 mr-2" alt="hello">
     <span class="font-bold text-2xl">SemsarOnline</span>
   </a>
  <!-- pages -->
   <div class="flex flex-row items-center max-[640px]:hidden">
-    <a routerLink="/home" class="m-2 text-slate-400">Home</a>
-    <a routerLink="/about" class="m-2 text-slate-400">About</a>
-    <a routerLink="/contact" class="m-2 text-slate-400">Contact</a>
+    <a routerLink="/home" class=" py-3 px-2 text-slate-400">Home</a>
+    <a routerLink="/about" class=" py-3 px-2 text-slate-400">About</a>
+    <a routerLink="/contact" class=" py-3 px-2 text-slate-400">Contact</a>
   </div>
   <!-- login -->
   <div class="flex flex-row items-center max-[640px]:hidden">
-    <a routerLink="/login" class="m-2 text-slate-400">Login</a>
-    <a routerLink="/register" class="m-2 text-slate-400">Register</a>
+
+   @if(!isLoggedIn()){
+      <a routerLink="/login" class=" py-3 px-2 text-slate-400">Login</a>
+      <a routerLink="/register" class=" py-3 px-2 text-slate-400">Register</a>
+   }@else {
+        <a class="text-xl font-bold border-yellow-500 border-b-2
+          text-slate-400 rounded-md px-3 py-1 inline-flex items-center gap-3
+          hover:bg-slate-700 transition hover:border-b-0 cursor-pointer"
+          routerLink="/profile">
+          {{getUserDetails()?.username}}
+          <img src="https://upload.wikimedia.org/wikipedia/commons/2/2c/Default_pfp.svg"
+          class="w-7 h-7 rounded-full" alt="">
+        </a>
+   }
   </div>
   <!-- mobile menu -->
   <div class="flex flex-row items-center mobile" >
-    <button class="m-2 text-slate-400 ">
+    <button class=" py-3 px-2 text-slate-400 " (click)="toggleMenu()">
       <svg xmlns="http://www.w3.org/2000/svg" class="w-6" viewBox="0 0 448 512"><path d="M0 96C0 78.3 14.3 64 32 64l384 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 128C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32l384 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 288c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32L32 448c-17.7 0-32-14.3-32-32s14.3-32 32-32l384 0c17.7 0 32 14.3 32 32z"/></svg>
     </button>
+  </div>
+
+</div>
+<div id="menu" class="w-full mobile hideMenu fixed h-fit top-20 bg-white z-10">
+  <div class="flex flex-col items-start justify-start">
+    @if(!isLoggedIn()){
+      <a routerLink="/login" class=" py-3 px-2 text-slate-600 hover:bg-slate-300 w-full">Login</a>
+      <a routerLink="/register" class=" py-3 px-2 text-slate-600 hover:bg-slate-300 w-full">Register</a>
+    }@else {
+      <a class="text-xl font-bold
+      text-slate-600 rounded-md py-1 inline-flex items-center gap-3
+       transition cursor-pointer hover:bg-slate-300 w-full px-2"
+      routerLink="/profile">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/2/2c/Default_pfp.svg"
+      class="w-7 h-7 rounded-full" alt="">
+      {{getUserDetails()?.username}}
+      </a>
+    }
+    <hr class="w-full">
+    <a routerLink="/home" class=" py-3 px-2 text-slate-600 w-full hover:bg-slate-300">Home</a>
+    <a routerLink="/about" class=" py-3 px-2 text-slate-600 w-full hover:bg-slate-300">About</a>
+    <a routerLink="/contact" class=" py-3 px-2 text-slate-600 w-full hover:bg-slate-300">Contact</a>
   </div>
 </div>

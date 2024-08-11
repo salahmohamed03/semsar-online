@@ -69,7 +69,7 @@ namespace Semsar_online.Services.Classes
                 return new AuthDTO() { Message = "Invalid request" };
 
             var activert = user.RefreshTokens.Single(x => x.IsActive);
-            activert.RevokedOn = DateTime.UtcNow;
+            activert.RevokedOn = DateTime.Now;
             var newRefreshToken = GenerateRefreshToken();
             user.RefreshTokens.Add(newRefreshToken);
             await _userManager.UpdateAsync(user);
@@ -176,8 +176,8 @@ namespace Semsar_online.Services.Classes
             return new RefreshToken
             {
                 Token = Convert.ToBase64String(randomNumber),
-                ExpiresOn = DateTime.UtcNow.AddMinutes(1),
-                CreatedOn = DateTime.UtcNow
+                ExpiresOn = DateTime.Now.AddDays(7),
+                CreatedOn = DateTime.Now
             };
         }
     }

@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using NuGet.Common;
 using Semsar_online.DTO_s;
 using Semsar_online.Services.Interfaces;
 
@@ -41,16 +43,17 @@ namespace Semsar_online.Controllers
             if (!result.IsAuthenticated)
                 return BadRequest(result);
 
-            SetRefreshTokenInCookie(result.RefreshToken , result.RefreshTokenExpiration);
+            SetRefreshTokenInCookie(result.RefreshToken, result.RefreshTokenExpiration);
 
             return Ok(result);
         }
 
-        public record RefreshTokenDTO(string? token,string Email);
+
+        public record RefreshTokenDTO(string Email);
         [HttpPost("refreshToken")]
         public async Task<IActionResult> RefreshToken(RefreshTokenDTO dto)
         {
-            var token = Request.Cookies["refreshToken"]?? dto.token;
+            var token = Request.Cookies["rt"];
             if (token == null)
                 return BadRequest("Invalid request");
 
@@ -61,18 +64,39 @@ namespace Semsar_online.Controllers
 
             SetRefreshTokenInCookie(result.RefreshToken, result.RefreshTokenExpiration);
 
-            return Ok();
+            return Ok(result);
+        }
+        [HttpGet("getCookie")]
+        [Authorize]
+        public async Task<IActionResult> GetCookie()
+        {
+            string? token = Request.Cookies["rt"];
+
+            return Ok(new {cookie = token});
         }
 
-        [NonAction]
-        public void SetRefreshTokenInCookie(string token,DateTime expiresOn)
+        [HttpGet("setCookie")]
+        public async Task<IActionResult> SetCookie()
         {
             var cookieOption = new CookieOptions()
             {
-                Expires = expiresOn,
-                HttpOnly = true
+                /*HttpOnly = true,*/
+                Expires = DateTime.Now.AddMinutes(10)
             };
-            Response.Cookies.Append("refreshToken", token, cookieOption);
+            HttpContext.Response.Cookies.Append("test", "test", cookieOption);
+
+            return Ok();
+        }   
+        [NonAction]
+        public void SetRefreshTokenInCookie(string token, DateTime expiresOn)
+        {
+            var cookieOption = new CookieOptions()
+            {
+                /*HttpOnly = true,*/
+                Expires = expiresOn.AddMinutes(1),
+                
+            };
+            HttpContext.Response.Cookies.Append("rt", token, cookieOption);
         }
 
     }

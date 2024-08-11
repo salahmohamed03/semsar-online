@@ -24,7 +24,7 @@ namespace Semsar_online.Models
         
         public string? Description { get; set; }
         [Required]
-        public DateTime ListingDate { get; set; } = DateTime.UtcNow;
+        public DateTime ListingDate { get; set; } = DateTime.Now;
 
         [Required]
         public int DownPayment {  get; set; }

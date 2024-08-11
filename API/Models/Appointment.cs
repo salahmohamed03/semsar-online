@@ -9,7 +9,7 @@ namespace Semsar_online.Models
         public string UserId { get; set; }
         public int PropertyId { get; set; }
         [Required]
-        public DateTime AppointmentDate { get; set; } = DateTime.UtcNow;
+        public DateTime AppointmentDate { get; set; } = DateTime.Now;
 
         public User? User { get; set; }
         public Property? Property { get; set; }

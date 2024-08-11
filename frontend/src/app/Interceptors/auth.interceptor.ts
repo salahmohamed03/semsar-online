@@ -1,16 +1,20 @@
 import { HttpInterceptorFn } from '@angular/common/http';
-import { Inject } from '@angular/core';
+import { inject, Inject } from '@angular/core';
 import { environment } from '../../environments/environment.development';
+import { AuthService } from '../Services/auth.service';
+import { catchError } from 'rxjs';
+
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
-  console.log('authInterceptor');
 
+  const authService = inject(AuthService);
   if(needsAutherization(req.url))
     return next(req);
 
-  const authService = Inject('authService');
-  const token = authService.getToken();
+  const token = localStorage.getItem('token');
   if (token) {
+
+
     req = req.clone({
       setHeaders: {
         Authorization: `Bearer ${token}`,
@@ -20,7 +24,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   return next(req);
 };
 const needsAutherization = (url:string)=>{
-  const includeUrls:string[] =[`${environment.apiUrl}`];
+  const includeUrls:string[]=[];
   return includeUrls.some(x => x === url);
 };
 
