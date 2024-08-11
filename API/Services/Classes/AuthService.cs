@@ -16,10 +16,7 @@ namespace Semsar_online.Services.Classes
     {
         private readonly UserManager<User> _userManager;
         private readonly JWT _jwt;
-        public AuthService(AppDbContext context,
-            UserManager<User> userManager,
-            RoleManager<IdentityRole> roleManager,
-            IOptions<JWT> jwt) 
+        public AuthService(UserManager<User> userManager,IOptions<JWT> jwt) 
         { 
             _userManager = userManager;
             _jwt = jwt.Value;
