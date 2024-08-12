@@ -13,5 +13,6 @@ namespace Semsar_online.Models
         
         public ICollection<Appointment>? Appointments { get; set; }
         public List<RefreshToken>? RefreshTokens { get; set; }
+        public ICollection<Favorite>? Favorites { get; set; }
     }
 }
