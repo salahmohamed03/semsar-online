@@ -34,7 +34,8 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services.AddScoped<IAuthService,AuthService>();
-
+builder.Services.AddScoped<IPropertyService, PropertyService>();
+builder.Services.AddScoped<ICompanyService, CompanyService>();
 // JWT
 
 //configure JWT

@@ -4,7 +4,7 @@ namespace Semsar_online.Services.Interfaces
     public interface ICompanyService
     {
         Task<ResultDTO> AddCompany(CompanyDTO dto);
-        Task<CompanyDTO?> GetCompany(string id);
+        Task<CompanyDTO?> GetCompanies(Func<CompanyDTO,bool> predicate);
         Task<ResultDTO> UpdateCompany(CompanyDTO dto);
         //Task<ResultDTO> DeleteCompany(string id);
         Task<List<PropertyDTO>?> GetProperties(string id);

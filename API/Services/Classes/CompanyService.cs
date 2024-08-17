@@ -53,17 +53,18 @@ namespace Semsar_online.Services.Classes
             return new ResultDTO("Property deleted successfully", true);
         }
 
-        public async Task<CompanyDTO?> GetCompany(string id)
+        public async Task<CompanyDTO?> GetCompanies(Func<CompanyDTO,bool> predicate)
         {
-            var company = _context.Companies.FirstOrDefault(x => x.Id == id);
+            var company = _context.Companies
+                .Select(x => new CompanyDTO() {
+                    Address = x.Address,
+                    City = x.City,
+                    Id = x.Id
+                })
+                .FirstOrDefault(predicate);
             if (company == null)
                 return null;
-            return new CompanyDTO()
-            {
-                Id = company.Id,
-                City = company.City,
-                Address = company.Address
-            };
+            return company;
         }
 
         public async Task<List<PropertyDTO>?> GetProperties(string id)
