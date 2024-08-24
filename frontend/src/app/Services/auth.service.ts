@@ -51,7 +51,7 @@ export class AuthService {
     if(token){
       const payload:any = jwtDecode(token);
       const userDetails = {
-        id: payload['uid'] as number,
+        id: payload['uid'] as string,
         email: payload['email'] as string,
         username: payload['sub'] as string,
         roles: payload['roles'] as string ,

@@ -1,0 +1,22 @@
+<div class="w-full h-full bg-slate-300 pt-20">
+  <div class="min-w-60 max-w-[600px] h-fit p-3 bg-slate-700 rounded-xl mx-auto mt-16">
+    <h1 class="text-3xl text-slate-200 font-bold">Add company</h1>
+    <form class="flex flex-col gap-3 mt-3" [formGroup]="AddComanyForm" (ngSubmit)="addCompany()">
+      <input type="text" placeholder="Company address" formControlName="Address"
+      class="p-2 rounded-md bg-slate-800 text-slate-200">
+      <span *ngIf="AddComanyForm.get('Address')?.invalid && AddComanyForm.get('Address')?.touched" class="text-red-600">field is required</span>
+      <input type="text" placeholder="Company city" formControlName="City"
+      class="p-2 rounded-md bg-slate-800 text-slate-200">
+      <span *ngIf="AddComanyForm.get('City')?.invalid&& AddComanyForm.get('City')?.touched" class="text-red-600">field is required</span>
+      <input type="file" placeholder="Company logo"
+      (change)="onFileSelected($event)"
+      class="p-2 rounded-md bg-slate-800 text-slate-200">
+      <!-- selected logo  -->
+
+      <div *ngIf="imageUrl">
+        <img [src]="imageUrl" alt="Company Logo" class="w-20 h-20 rounded-md" style="max-width: 100px; max-height: 100px;" />
+      </div>
+      <button class="p-2 bg-slate-800 text-slate-200 rounded-md">Add company</button>
+    </form>
+  </div>
+</div>

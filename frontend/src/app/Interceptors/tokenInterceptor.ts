@@ -43,7 +43,7 @@ function tryRefreshToken(e: HttpErrorResponse, nextr: HttpHandlerFn, req: HttpRe
       })
     );
   }
-  authService.logout();
+  // authService.logout();
   // Return the original error if it's not a 401 status or user is not logged in
   return of(e);
 }

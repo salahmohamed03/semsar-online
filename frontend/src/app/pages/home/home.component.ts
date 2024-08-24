@@ -4,6 +4,7 @@ import { Observable, of } from 'rxjs';
 import { AuthService } from './../../Services/auth.service';
 import { Component, signal } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -15,7 +16,11 @@ import { HttpResponse } from '@angular/common/http';
 export class HomeComponent {
 refresh() {
 }
-  constructor(private authService:AuthService) { }
+  constructor(private authService:AuthService,private router:Router) {
+    // if(this.isLoggedIn()){
+    //   this.router.navigate(['/listwithus']);
+    // }
+  }
   isLoggedIn():boolean{
     return this.authService.getToken() != null;
   };

@@ -16,6 +16,22 @@ namespace Semsar_online.Controllers
         {
             _companyService = companyService;
         }
+        [Authorize] 
+        [HttpGet("GetMyCompany")]
+        public async Task<IActionResult> GetMyCompany()
+        {
+            var userId = getUserIdFromToken();
+            if (userId == null)
+                return BadRequest("Invalid request");
+
+            var company = await _companyService.GetCompanies(x=> x.Id == userId);
+
+            if (company == null)
+                return BadRequest("Company not found");
+
+            return Ok(company);
+        }
+
         [HttpGet("GetCompanies")]
         public async Task<IActionResult> GetCompanies()
         {
@@ -70,11 +86,11 @@ namespace Semsar_online.Controllers
         [NonAction]
         private string? getUserIdFromToken()
         {
-            var token = Response.Headers.Authorization;
-            var tokenValue = token.ToString().Split(" ").LastOrDefault();
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var jwtToken = tokenHandler.ReadJwtToken(tokenValue);
-            return jwtToken.Claims.FirstOrDefault(c => c.Type == "userId")?.Value;
+            var token = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+            var handler = new JwtSecurityTokenHandler();
+            var jsonToken = handler.ReadToken(token);
+            var tokenS = handler.ReadToken(token) as JwtSecurityToken;
+            return tokenS?.Claims.First(claim => claim.Type == "uid").Value;
         }
     }
 }

@@ -7,7 +7,7 @@ namespace Semsar_online.Models
     {
         [Phone]
         public string? WhatsApp {  get; set; }
-
+        public string? Image { get; set; }
         public Company? Company { get; set; }
         public ICollection<Review>? Reviews { get; set; }
         

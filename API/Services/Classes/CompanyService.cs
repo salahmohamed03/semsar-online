@@ -1,17 +1,26 @@
 ﻿using Humanizer;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Semsar_online.Data;
 using Semsar_online.DTO_s;
 using Semsar_online.Models;
 using Semsar_online.Services.Interfaces;
+using System.Drawing;
+using System.Text.RegularExpressions;
 
 namespace Semsar_online.Services.Classes
 {
     public class CompanyService : ICompanyService
     {
         private readonly AppDbContext _context;
-        public CompanyService(AppDbContext context) {
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly UserManager<User> _userManager;
+        public CompanyService(AppDbContext context,UserManager<User> usermanager,IWebHostEnvironment webHostEnvironment = null)
+        {
             _context = context;
+            _webHostEnvironment = webHostEnvironment;
+            _userManager = usermanager;
         }
         private bool CompanyExists(string id)
         {
@@ -29,11 +38,14 @@ namespace Semsar_online.Services.Classes
         {
             if(CompanyExists(dto.Id))
                 return new ResultDTO("Company already exists");
+            await SaveImage(dto.Image, dto.Id);
+            string? img = GetImage(dto.Id);
             var company = new Company()
             {
                 Id = dto.Id,
                 City = dto.City,
-                Address = dto.Address
+                Address = dto.Address,
+                Image = img
             };
             await _context.Companies.AddAsync(company);
             await _context.SaveChangesAsync();
@@ -120,6 +132,28 @@ namespace Semsar_online.Services.Classes
             });
             await _context.SaveChangesAsync();
             return new ResultDTO("Property updated successfully", true);
+        }
+        public async Task SaveImage(string? imageBase64,string id)
+        {
+            if (!string.IsNullOrEmpty(imageBase64))
+            {
+                
+                var base64Data = Regex.Match(imageBase64, @"data:image/(?<type>.+?),(?<data>.+)").Groups["data"].Value;
+                byte[] imageBytes = Convert.FromBase64String(base64Data);
+                var uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "uploads");
+                Directory.CreateDirectory(uploadsFolder);
+                var filePath = Path.Combine(uploadsFolder, $"{id}co.jpg");
+                await System.IO.File.WriteAllBytesAsync(filePath, imageBytes);
+            }
+        }
+
+        public string? GetImage(string id)
+        {
+            var uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "uploads");
+            var filePath = Path.Combine(uploadsFolder, $"{id}co.jpg");
+
+            string image = Convert.ToBase64String(System.IO.File.ReadAllBytes(filePath));
+            return image;
         }
     }
 }
