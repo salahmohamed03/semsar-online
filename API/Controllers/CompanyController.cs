@@ -27,7 +27,7 @@ namespace Semsar_online.Controllers
             var company = await _companyService.GetCompanies(x=> x.Id == userId);
 
             if (company == null)
-                return BadRequest("Company not found");
+                return Ok(company);
 
             return Ok(company);
         }

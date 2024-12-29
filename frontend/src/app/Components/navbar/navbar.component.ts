@@ -23,4 +23,7 @@ export class NavbarComponent {
   toggleMenu(){
     document.getElementById('menu')?.classList.toggle('hideMenu');
   }
+  hasCompany(){
+
+  }
 }

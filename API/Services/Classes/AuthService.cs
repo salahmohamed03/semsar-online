@@ -157,7 +157,7 @@ namespace Semsar_online.Services.Classes
                 issuer: _jwt.Issuer,
                 audience: _jwt.Audience,
                 claims: claims,
-                expires: DateTime.Now.AddMinutes(_jwt.DurationInMinutes),
+                expires: DateTime.Now.AddSeconds(_jwt.DurationInMinutes),
                 signingCredentials: signingCredentials);
 
             return jwtSecurityToken;

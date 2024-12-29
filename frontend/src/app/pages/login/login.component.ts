@@ -30,7 +30,7 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       this.authService.login(loginRequest).subscribe((response:AuthResponse) => {
         if (response.isAuthenticated) {
-          this.Router.navigate(['/home']);
+          this.Router.navigate(['/']);
         }
       });
     }

@@ -4,6 +4,7 @@ import { CompanyService } from './../../Services/company.service';
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Company } from '../../Interfaces/company';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-listwithus',
@@ -19,14 +20,15 @@ export class ListwithusComponent {
   constructor(
     private companyService:CompanyService,
     private fb:FormBuilder,
-    private authService:AuthService) {
+    private authService:AuthService,
+    private router :Router) {
     this.AddComanyForm = this.fb.group({
       City: ['', Validators.required],
       Address: ['', Validators.required],
 
    });
   }
-  onFileSelected(event: Event) {
+  onFileSelected(event: Event) {``
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
       this.selectedFile = input.files[0];
@@ -53,10 +55,11 @@ export class ListwithusComponent {
         next: (result) => {
           console.log("result: ",result);
 
-          if(result.IsSuccess){
+          if(result.isSuccess){
             console.log('Company added successfully');
+            this.router.navigate(["/"])
           }else{
-            console.log(result.Message);
+            console.log(result.message);
           }
         },
         error: (error) => {

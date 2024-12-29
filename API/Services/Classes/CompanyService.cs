@@ -71,7 +71,8 @@ namespace Semsar_online.Services.Classes
                 .Select(x => new CompanyDTO() {
                     Address = x.Address,
                     City = x.City,
-                    Id = x.Id
+                    Id = x.Id,
+                    Image = x.Image,
                 })
                 .FirstOrDefault(predicate);
             if (company == null)
@@ -149,11 +150,7 @@ namespace Semsar_online.Services.Classes
 
         public string? GetImage(string id)
         {
-            var uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "uploads");
-            var filePath = Path.Combine(uploadsFolder, $"{id}co.jpg");
-
-            string image = Convert.ToBase64String(System.IO.File.ReadAllBytes(filePath));
-            return image;
+            return Path.Combine("http://localhost:5122/uploads/", $"{id}co.jpg");
         }
     }
 }

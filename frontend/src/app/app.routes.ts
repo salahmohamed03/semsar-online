@@ -18,7 +18,7 @@ export const routes: Routes = [
     component: RegisterComponent,
   },
   {
-    path: 'home',
+    path: '',
     component: HomeComponent,
   },
   {

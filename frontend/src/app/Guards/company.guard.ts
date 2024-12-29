@@ -5,19 +5,22 @@ import { AuthService } from '../Services/auth.service';
 import { CompanyService } from '../Services/company.service';
 import { firstValueFrom } from 'rxjs';
 
+
 export const  companyGuard: CanActivateFn = async (route, state) => {
   const authService = inject(AuthService);
   const companyService = inject(CompanyService);
   const router = inject(Router);
-  
+
   return firstValueFrom(companyService.getMyCompany()).then((company) => {
-    console.log("here");
-
-    router.navigate(['/company']);
-
     if (company) {
+      router.navigate(["/company"]);
       return false;
     }
+
     return true;
+  })
+  .catch((error) => {
+    console.log("error getting company:",error);
+    return false;
   });
 };
