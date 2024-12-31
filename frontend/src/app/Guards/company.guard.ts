@@ -7,7 +7,7 @@ import { firstValueFrom } from 'rxjs';
 
 
 export const  companyGuard: CanActivateFn = async (route, state) => {
-  const authService = inject(AuthService);
+  const auth = inject(AuthService);
   const companyService = inject(CompanyService);
   const router = inject(Router);
 
@@ -21,6 +21,10 @@ export const  companyGuard: CanActivateFn = async (route, state) => {
   })
   .catch((error) => {
     console.log("error getting company:",error);
+    if(!auth.isAuthenticated()){
+      router.navigate(['/login']);
+    }
     return false;
   });
 };
+

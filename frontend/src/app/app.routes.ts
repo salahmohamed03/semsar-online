@@ -7,6 +7,7 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { ListwithusComponent } from './pages/listwithus/listwithus.component';
 import { companyGuard } from './Guards/company.guard';
 import { YourcompanyComponent } from './pages/yourcompany/yourcompany.component';
+import { profileGuard } from './Guards/profile.guard';
 
 export const routes: Routes = [
   {
@@ -24,6 +25,7 @@ export const routes: Routes = [
   {
     path:'profile',
     component: ProfileComponent,
+    canActivate: [profileGuard]
   },
   {
     path:'listwithus',
