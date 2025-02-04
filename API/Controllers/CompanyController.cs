@@ -92,5 +92,14 @@ namespace Semsar_online.Controllers
             var tokenS = handler.ReadToken(token) as JwtSecurityToken;
             return tokenS?.Claims.First(claim => claim.Type == "uid").Value;
         }
+        [HttpPost("AddProperty")]
+        public async Task<IActionResult> AddProperty(PropertyDTO dto)
+        {
+            var result = await _companyService.AddProperty(dto);
+            if (result.IsSuccess)
+                return Ok(result);
+
+            return BadRequest(result);
+        }
     }
 }

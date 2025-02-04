@@ -152,5 +152,24 @@ namespace Semsar_online.Services.Classes
         {
             return Path.Combine("http://localhost:5122/uploads/", $"{id}co.jpg");
         }
+        public async Task<ResultDTO> AddProperty(PropertyDTO dto)
+        {
+            if (!CompanyExists(dto.SellerId))
+                return new ResultDTO("Company does not exist");
+            var property = new Property()
+            {
+                Area = dto.Area,
+                DownPayment = dto.DownPayment,
+                ListingDate = dto.ListingDate,
+                Price = dto.Price,
+                NumberOfRooms = dto.NumberOfRooms,
+                Description = dto.Description,
+                Type = dto.Type,
+                SellerId = dto.SellerId
+            };
+            await _context.Properties.AddAsync(property);
+            await _context.SaveChangesAsync();
+            return new ResultDTO("Property added successfully", true);
+        }
     }
 }

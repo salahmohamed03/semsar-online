@@ -10,5 +10,6 @@ namespace Semsar_online.Services.Interfaces
         Task<List<PropertyDTO>?> GetProperties(string id);
         Task<ResultDTO> UpdateProperty(PropertyDTO dto);
         Task<ResultDTO> DeleteProperty(int id);
+        Task<ResultDTO> AddProperty(PropertyDTO dto);
     }
 }
