@@ -18,6 +18,8 @@ export class NavbarComponent {
     this.authService.logout();
   }
   getUserDetails(){
+    if(!this.authService.isAuthenticated())
+      return null;
     return this.authService.getUserDetails();
   }
   toggleMenu(){

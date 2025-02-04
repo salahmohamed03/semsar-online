@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { LoginRequest } from '../Interfaces/login-request';
-import { catchError, map, Observable } from 'rxjs';
+import { catchError, first, map, Observable, firstValueFrom } from 'rxjs';
 import { AuthResponse } from '../Interfaces/auth-response';
 import { environment } from '../../environments/environment.development';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -80,12 +80,25 @@ export class AuthService {
     try {
       const token = localStorage.getItem('token');
       if (!token) return true;
-      
-      const payload = jwtDecode(token);
-      const exp = payload['exp'];
+      const payload = jwtDecode<{exp: number, email: string}>(token);
+      const exp = payload.exp;
       if (!exp) return true;
-      
-      return Date.now()/1000 > exp;
+      const is_expired = Date.now() >= exp * 1000;
+
+      // if (is_expired) {
+      //   try {
+      //     const userDetails = this.getUserDetails();
+      //     const response = await firstValueFrom(this.RefreshToken(userDetails?.email));
+      //     if (response && response.isAuthenticated) {
+      //       localStorage.setItem('token', response.token);
+      //       return false;
+      //     }
+      //   } catch (error) {
+      //     this.logout();
+      //     return true;
+      //   }
+      // }
+      return is_expired;
     } catch {
       return true;
     }
