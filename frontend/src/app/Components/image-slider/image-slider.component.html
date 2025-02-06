@@ -1,0 +1,26 @@
+<div class="slider-container aspect-[3/2] w-[100%] relative">
+    <img
+    [src]="images[currentSlide]"
+    class="slide-image aspect-[3/2] absolute top-0 left-0 w-[100%] h-[100%] object-cover"
+    alt="slide">
+
+    <button class="bg-gray-100  bg-opacity-50 opacity-0 hover:opacity-100 rounded-full
+    transition-all duration-300 flex items-center absolute left-0 top-[50%] transform -translate-y-1/2"
+    (click)="prevSlide()"><mat-icon class="translate-x-[15%]">arrow_back_ios</mat-icon></button>
+
+    <button class="bg-gray-100  bg-opacity-50 opacity-0 hover:opacity-100 rounded-full
+    transition-all duration-300 flex items-center absolute right-0 top-[50%] transform -translate-y-1/2"
+    (click)="nextSlide()"><mat-icon >arrow_forward_ios</mat-icon>
+
+    </button>
+    <div class="slider-controls absolute bottom-0 w-[100%] flex flex-row justify-center items-center">
+      <div class="slide-indicators w-[100%] flex flex-row justify-center items-center">
+        <span
+          *ngFor="let slide of images; let i = index"
+          [class.active]="currentSlide === i"
+          (click)="setCurrentSlide(i)">
+          ●
+        </span>
+      </div>
+  </div>
+</div>

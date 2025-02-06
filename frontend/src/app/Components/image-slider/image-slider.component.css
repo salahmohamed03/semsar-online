@@ -1,0 +1,36 @@
+/* .slider-container {
+  position: relative;
+  max-width: 1000px;
+  margin: 0 auto;
+} */
+
+.slide-image {
+  width: 100%;
+  height: auto;
+}
+
+.slider-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+
+.slide-indicators {
+  display: flex;
+  gap: 10px;
+}
+
+.slide-indicators span {
+  cursor: pointer;
+  color: #ccc;
+}
+
+.slide-indicators span.active {
+  color: #333;
+}
+
+button {
+  padding: 8px 16px;
+  cursor: pointer;
+}

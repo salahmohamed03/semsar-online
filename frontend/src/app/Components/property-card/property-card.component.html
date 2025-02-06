@@ -1,0 +1,30 @@
+<div class="shadow-xl rounded-xl flex flex-col w-[100%] h-fit-content bg-white">
+  <div class="max-w-[100%] aspect-[3/2] rounded-xl overflow-hidden">
+    <app-image-slider [images]="imageUrls"></app-image-slider>
+  </div>
+  <div class="p-4 relative">
+    <h1 class="text-sm font-light text-gray-600">{{property.type}}</h1>
+    <h1 class="text-xl font-bold">{{property.price}} EGP</h1>
+    <p class="text-xl font-light text-gray-600">{{property.description}}</p>
+
+    <h1 class=" flex flex-row  items-center mt-10 font-light text-gray-600"><mat-icon class="font-light text-gray-600">location_on</mat-icon> {{property.Location}}</h1>
+    <!-- details -->
+    <div class="flex flex-row flex-wrap space-x-3 mt-4 w-[100%] ">
+      <div class="flex flex-row items-center">
+        <mat-icon class="font-light text-gray-600">king_bed</mat-icon>
+        <p class="text-sm font-light text-gray-600">{{property.numberOfRooms}} Rooms</p>
+      </div>
+      <div class="flex flex-row items-center">
+        <mat-icon class="font-light text-gray-600">home</mat-icon>
+        <p class="text-sm font-light text-gray-600">{{property.area}} m<sup>2</sup></p>
+      </div>
+      <div class="flex flex-row items-center">
+        <mat-icon class="font-light text-gray-600">date_range</mat-icon>
+        <p class="text-sm font-light text-gray-600">{{property.listingDate}}</p>
+      </div>
+    </div>
+    <div class="absolute right-4 top-4">
+      <img class="w-16 aspect-[3/2] rounded-lg" [src]="property.company.Image" alt="company logo">
+    </div>
+  </div>
+</div>
