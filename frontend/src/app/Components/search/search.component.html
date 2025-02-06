@@ -21,6 +21,7 @@
     <div *ngIf="activeDropdown === 'buy'" class="absolute z-10 mt-2 w-48 bg-white rounded-md shadow-lg">
       <button class="block px-4 py-2 hover:bg-gray-100" (click)="onBuyChange('Buy')">Buy</button>
       <button class="block px-4 py-2 hover:bg-gray-100" (click)="onBuyChange('Rent')">Rent</button>
+      <button class="block px-4 py-2 hover:bg-gray-100" (click)="onBuyChange('any')">any</button>
     </div>
   </div>
 
@@ -33,6 +34,7 @@
       <button class="block px-4 py-2 hover:bg-gray-100" (click)="onPropertyTypeChange('Apartment')">Apartment</button>
       <button class="block px-4 py-2 hover:bg-gray-100" (click)="onPropertyTypeChange('Villa')">Villa</button>
       <button class="block px-4 py-2 hover:bg-gray-100" (click)="onPropertyTypeChange('House')">House</button>
+      <button class="block px-4 py-2 hover:bg-gray-100" (click)="onPropertyTypeChange('any')">any</button>
     </div>
   </div>
 

@@ -44,8 +44,8 @@ export class SearchComponent {
     if (!data) return null;
     return data.filter((property) => {
       if (query.query && !property.description.includes(query.query)) return false;
-      if (query.type && property.type !== query.type) return false;
-      if (query.status && property.status !== query.status) return false;
+      if (query.type && query.type !== 'any' && property.type !== query.type) return false;
+      if (query.status && query.status !== 'any' && property.status !== query.status) return false;
       if (query.minPrice && property.price < query.minPrice) return false;
       if (query.maxPrice && property.price > query.maxPrice) return false;
       if (query.minNoRooms && property.numberOfRooms < query.minNoRooms) return false;
@@ -55,6 +55,7 @@ export class SearchComponent {
 
   constructor() {
     effect(() => {
+      console.log('Emitting filtered data');
       this.filteredData.emit(this._filteredData());
     });
   }
@@ -70,47 +71,29 @@ export class SearchComponent {
   onMaxPriceChange(event: Event) {
     const target = event.target as HTMLInputElement;
     const price = parseInt(target.value);
-    this.searchQuery.update((query) => {
-      query.maxPrice = price;
-      return query;
-    });
+    this.searchQuery.set( {...this.searchQuery(), maxPrice: price});
 
   }
   onMinPriceChange(event: Event) {
     const target = event.target as HTMLInputElement;
     const price = parseInt(target.value);
-    this.searchQuery.update((query) => {
-      query.minPrice = price;
-      return query;
-    });
+    this.searchQuery.set({...this.searchQuery(), minPrice: price});
   }
   onNORoomsChange(event: Event) {
     const target = event.target as HTMLInputElement;
     const noRooms = parseInt(target.value);
-    this.searchQuery.update((query) => {
-      query.minNoRooms = noRooms;
-      return query;
-    });
+    this.searchQuery.set({ ...this.searchQuery(), minNoRooms: noRooms });
   }
   onPropertyTypeChange(type: string) {
-    this.searchQuery.update((query) => {
-      query.type = type;
-      return query;
-    });
+    this.searchQuery.set({ ...this.searchQuery(), type });
   }
   onBuyChange(status: string) {
-    this.searchQuery.update((query) => {
-      query.status = status;
-      return query;
-    });
+    this.searchQuery.set({ ...this.searchQuery(), status });
   }
   onSearchChange(event: Event) {
     const target = event.target as HTMLInputElement;
     const query = target.value;
-    this.searchQuery.update((searchQuery) => {
-      searchQuery.query = query;
-      return searchQuery;
-    });
+    this.searchQuery.set({ ...this.searchQuery(), query });
   }
 
 }
