@@ -10,7 +10,12 @@
     <a routerLink="/" class=" py-3 px-2 text-slate-400">Home</a>
     <a routerLink="/explore" class=" py-3 px-2 text-slate-400">Explore</a>
     <a routerLink="/about" class=" py-3 px-2 text-slate-400">About</a>
-    <a routerLink="/listwithus" class=" py-3 px-2 text-slate-400">List with us</a>
+    @if(CompanyExists()){
+      <a routerLink="/mycompany" class=" py-3 px-2 text-slate-400">My Company</a>
+    }
+    @else{
+      <a routerLink="/listwithus" class=" py-3 px-2 text-slate-400">List with us</a>
+    }
   </div>
   <!-- login -->
   <div class="flex flex-row items-center max-[640px]:hidden">

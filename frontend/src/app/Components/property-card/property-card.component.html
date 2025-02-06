@@ -2,7 +2,7 @@
   <div class="max-w-[100%] aspect-[3/2] rounded-xl overflow-hidden">
     <app-image-slider [images]="imageUrls"></app-image-slider>
   </div>
-  <div class="p-4 relative">
+  <a routerLink="" class="p-4 relative">
     <h1 class="text-sm font-light text-gray-600">{{property.type}}</h1>
     <h1 class="text-xl font-bold">{{property.price}} EGP</h1>
     <p class="text-xl font-light text-gray-600">{{property.description}}</p>
@@ -26,5 +26,5 @@
     <div class="absolute right-4 top-4">
       <img class="w-16 aspect-[3/2] rounded-lg" [src]="property.company.Image" alt="company logo">
     </div>
-  </div>
+  </a>
 </div>

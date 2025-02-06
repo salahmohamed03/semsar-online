@@ -34,9 +34,10 @@ export const routes: Routes = [
     canActivate: [companyGuard]
   },
   {
-    path:'company',
+    path:'mycompany',
     component: YourcompanyComponent,
   },
+  
   {
     path:'explore',
     component: ExploreComponent,

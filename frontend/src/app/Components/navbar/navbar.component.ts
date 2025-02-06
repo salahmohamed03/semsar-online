@@ -1,6 +1,8 @@
 import { AuthService } from './../../Services/auth.service';
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { CompanyService } from '../../Services/company.service';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
@@ -10,7 +12,11 @@ import { RouterLink } from '@angular/router';
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent {
-  constructor(private authService:AuthService) { }
+
+  public CompanyExists = signal<boolean>(false);
+  constructor(private authService:AuthService,private companyService:CompanyService) {
+    this.hasCompany();
+  }
   isLoggedIn():boolean{
     return this.authService.isValidToken();
   };
@@ -18,14 +24,22 @@ export class NavbarComponent {
     this.authService.logout();
   }
   getUserDetails(){
-    if(!this.authService.isAuthenticated())
-      return null;
+    // if(!this.authService.isAuthenticated())
+    //   return null;
     return this.authService.getUserDetails();
   }
   toggleMenu(){
     document.getElementById('menu')?.classList.toggle('hideMenu');
   }
   hasCompany(){
-
+    this.companyService.getMyCompany().subscribe({
+      next: (company) => {
+        this.CompanyExists.set(true);
+      },
+      error: (error) => {
+        this.CompanyExists.set(false);
+      }
+    })
   }
 }
+

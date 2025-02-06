@@ -3,7 +3,139 @@
   <div class="">
     <h1 class="text-6xl text-white font-bold w-full text-center" >Find every home here</h1>
   </div>
-  <div class="h-40 flex flex-row justify-center bg-blue-400 items-center rounded-3xl bg-opacity-30 backdrop-blur-[2px] w-[90%] lg:w-[50%] mx-auto my-10">
-    <div class="h-14 w-[90%] rounded-3xl bg-red-300"></div>
+  <div class="h-40 flex flex-row justify-center bg-black items-center rounded-3xl bg-opacity-20 backdrop-blur-[2px] w-[90%] lg:w-[65%] mx-auto my-10">
+    <!-- <div class="h-14 w-[90%] rounded-3xl bg-red-300"></div> -->
+      <!-- search -->
+ <div class="flex flex-row flex-wrap justify-center items-center gap-2 p-2 bg-white rounded-xl shadow-md ">
+  <!-- Search Input -->
+  <div class="flex items-center px-4 py-2 bg-gray-100 rounded-full w-80">
+    <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" stroke-width="2"
+      viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path stroke-linecap="round" stroke-linejoin="round"
+        d="M21 21l-4.35-4.35M16.65 16.65a8 8 0 1 0-11.3-11.3 8 8 0 0 0 11.3 11.3z">
+      </path>
+    </svg>
+    <input type="text" placeholder="City, community or building"
+      class="ml-2 bg-transparent outline-none w-full placeholder-gray-500" (input)="onSearchChange($event)">
   </div>
+
+  <!-- Filters -->
+  <!-- Buy dropdown -->
+  <div class="relative">
+    <button (click)="toggleDropdown('buy')" class="px-4 py-2 border rounded-full hover:bg-gray-100">
+      Buy <i class="fa-solid fa-chevron-down transition-transform duration-300" [ngClass]="{'-rotate-180': activeDropdown === 'buy'}"></i>
+    </button>
+    <div *ngIf="activeDropdown === 'buy'" class="absolute z-10 mt-2 w-48 bg-white rounded-md shadow-lg">
+      <button class="block px-4 py-2 hover:bg-gray-100" (click)="onBuyChange('Buy')">Buy</button>
+      <button class="block px-4 py-2 hover:bg-gray-100" (click)="onBuyChange('Rent')">Rent</button>
+      <button class="block px-4 py-2 hover:bg-gray-100" (click)="onBuyChange('any')">any</button>
+    </div>
+  </div>
+
+  <!-- Property type dropdown -->
+  <div class="relative">
+    <button (click)="toggleDropdown('propertyType')" class="peer px-4 py-2 border rounded-full hover:bg-gray-100">
+        Property type <i class="fa-solid fa-chevron-down transition-transform duration-300" [ngClass]="{'-rotate-180': activeDropdown === 'propertyType'}"></i>
+    </button>
+    <div *ngIf="activeDropdown === 'propertyType'" class="absolute z-10 mt-2 w-48 bg-white rounded-md shadow-lg">
+      <button class="block px-4 py-2 hover:bg-gray-100" (click)="onPropertyTypeChange('Apartment')">Apartment</button>
+      <button class="block px-4 py-2 hover:bg-gray-100" (click)="onPropertyTypeChange('Villa')">Villa</button>
+      <button class="block px-4 py-2 hover:bg-gray-100" (click)="onPropertyTypeChange('House')">House</button>
+      <button class="block px-4 py-2 hover:bg-gray-100" (click)="onPropertyTypeChange('any')">any</button>
+    </div>
+  </div>
+
+  <!-- Beds & Baths dropdown -->
+  <div class="relative">
+    <button (click)="toggleDropdown('bedsBaths')" class="px-4 py-2 border rounded-full hover:bg-gray-100">
+      number of rooms <i class="fa-solid fa-chevron-down transition-transform duration-300" [ngClass]="{'-rotate-180': activeDropdown === 'bedsBaths'}"></i>
+    </button>
+    <div *ngIf="activeDropdown === 'bedsBaths'" class="absolute z-10 mt-2 w-48 bg-white rounded-md shadow-lg">
+      <input type="number" placeholder="0" class="block px-4 py-2 hover:bg-gray-100" (input)="onNORoomsChange($event)">
+    </div>
+  </div>
+
+  <!-- Price dropdown -->
+  <div class="relative">
+    <button (click)="toggleDropdown('price')" class="px-4 py-2 border rounded-full hover:bg-gray-100">
+      Price <i class="fa-solid fa-chevron-down transition-transform duration-300" [ngClass]="{'-rotate-180': activeDropdown === 'price'}"></i>
+    </button>
+    <div *ngIf="activeDropdown === 'price'" class="absolute z-10 mt-2 w-48 bg-white rounded-md shadow-lg">
+      <input type="number" placeholder="Min" class="block px-4 py-2 hover:bg-gray-100" (input)="onMaxPriceChange($event)">
+      <input type="number" placeholder="Max" class="block px-4 py-2 hover:bg-gray-100" (input)="onMaxPriceChange($event)">
+    </div>
+  </div>
+
+  <button class="px-4 py-2 bg-slate-700 text-white rounded-full hover:bg-slate-800">Search</button>
+</div>
+
+  </div>
+  <section class="py-16 bg-white">
+    <div class="container mx-auto px-4">
+      <h2 class="text-4xl font-bold text-center mb-12 text-slate-700">Our Services</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="p-6 bg-gray-50 rounded-lg shadow-lg">
+          <div class="text-slate-800 text-4xl mb-4">
+            <i class="fas fa-home"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-3 text-slate-700">Property Listing</h3>
+          <p class="text-gray-600">Browse through our extensive collection of properties for sale and rent.</p>
+        </div>
+        <div class="p-6 bg-gray-50 rounded-lg shadow-lg">
+          <div class="text-slate-800 text-4xl mb-4">
+            <i class="fas fa-search"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-3 text-slate-700">Property Search</h3>
+          <p class="text-gray-600">Find your perfect property with our advanced search filters.</p>
+        </div>
+        <div class="p-6 bg-gray-50 rounded-lg shadow-lg">
+          <div class="text-slate-800 text-4xl mb-4">
+            <i class="fas fa-handshake"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-3 text-slate-700">Expert Guidance</h3>
+          <p class="text-gray-600">Get professional assistance throughout your property journey.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="mt-5">
+    <div class="bg-gray-800 text-white py-12 w-full mt-auto">
+      <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div>
+            <h3 class="text-xl font-bold mb-4">About Us</h3>
+            <p class="text-gray-400">Your trusted partner in finding the perfect home for your needs.</p>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold mb-4">Quick Links</h3>
+            <ul class="space-y-2">
+              <li><a href="#" class="text-gray-400 hover:text-white">Properties</a></li>
+              <li><a href="#" class="text-gray-400 hover:text-white">Services</a></li>
+              <li><a href="#" class="text-gray-400 hover:text-white">Contact</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold mb-4">Contact Info</h3>
+            <ul class="text-gray-400 space-y-2">
+              <li>Email: info&#64;example.com</li>
+              <li>Phone: (123) 456-7890</li>
+              <li>Address: 123 Main St, City</li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold mb-4">Follow Us</h3>
+            <div class="flex space-x-4">
+              <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook"></i></a>
+              <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>
+              <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-instagram"></i></a>
+            </div>
+          </div>
+        </div>
+        <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+          <p>&copy; 2024 All rights reserved.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
 </div>

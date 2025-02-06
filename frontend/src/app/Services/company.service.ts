@@ -4,6 +4,7 @@ import { environment } from '../../environments/environment.development';
 import { Company } from '../Interfaces/company';
 import { Result } from '../Interfaces/result';
 import { AuthService } from './auth.service';
+import { map, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,16 +14,31 @@ export class CompanyService {
   httpOptions :any;
   constructor(private http:HttpClient,private auth: AuthService) {
     this.httpOptions = {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' , 'withCredentials': 'true' ,'Authorization' :`Bearer ${this.auth.getToken()}` }),
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.auth.getToken()}`
+      }),
       withCredentials: true
     };
   }
 
 
-  getMyCompany(){
-    return this.http.get<Company>(`${this.apiurl}/Company/GetMyCompany`,this.httpOptions);
+  getMyCompany(): Observable<Company> {
+    return this.http.get<Company>(`${this.apiurl}/Company/GetMyCompany`, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.auth.getToken()}`
+      }),
+      withCredentials: true
+    });
   }
   AddCompany(company:Company){
-    return this.http.post<Result>(`${this.apiurl}/Company/AddCompany`,company);
+    return this.http.post<Result>(`${this.apiurl}/Company/AddCompany`, company, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.auth.getToken()}`
+      }),
+      withCredentials: true
+    });
   }
 }

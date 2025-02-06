@@ -1,1 +1,21 @@
-<p>explore works!</p>
+<div class="pt-20">
+
+  <div class="mx-auto w-[90%] sm:w-[80%] my-5  shadow-lg rounded-xl">
+
+    <!-- search -->
+    <app-search [data]="properties" (filteredData)="onFilteredData($event)" ></app-search>
+
+    <!-- properties -->
+    <div class="w-[100%] m-5">
+      <h1 class="font-semibold text-2xl text-slate-600">Listed properties</h1>
+      <div class="flex flex-row justify-between items-center">
+        <p class="text-slate-400">205,354 property</p>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
+      <app-property-card *ngFor="let property of properties" [property]="property"></app-property-card>
+    </div>
+
+  </div>
+</div>

@@ -3,10 +3,11 @@ import { Component, Input } from '@angular/core';
 import { property } from '../../Interfaces/property';
 import { ImageSliderComponent } from '../image-slider/image-slider.component';
 import { MatIconModule } from '@angular/material/icon';
+import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-property-card',
   standalone: true,
-  imports: [ ImageSliderComponent, MatIconModule ],
+  imports: [RouterLink, ImageSliderComponent, MatIconModule ],
   templateUrl: './property-card.component.html',
   styleUrl: './property-card.component.css'
 })

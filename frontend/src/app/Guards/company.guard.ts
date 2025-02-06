@@ -13,7 +13,7 @@ export const  companyGuard: CanActivateFn = async (route, state) => {
 
   return firstValueFrom(companyService.getMyCompany()).then((company) => {
     if (company) {
-      router.navigate(["/company"]);
+      router.navigate(["/mycompany"]);
       return false;
     }
 

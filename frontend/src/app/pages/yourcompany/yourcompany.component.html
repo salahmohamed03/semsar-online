@@ -1,50 +1,116 @@
 <div class="pt-20">
   <!-- your company details -->
-  <div class="mx-auto w-[90%] sm:w-[80%]  my-3 shadow-lg rounded-xl">
+  <div class="mx-auto w-[90%] sm:w-[80%] my-3 shadow-lg rounded-xl relative">
 
-  <div class="p-6 flex flex-col md:flex-row gap-6">
-    <div class="w-full md:w-1/3">
-      <img [src]="company.Image" alt="Company Image" class="w-full h-64 object-cover rounded-lg shadow">
-    </div>
-    <div class="w-full md:w-2/3 space-y-4">
-      <h1 class="text-3xl font-bold">{{company.Name}}</h1>
-      <p class="text-gray-600">{{company.Description}}</p>
-      <div class="space-y-2">
-        <div class="flex items-center gap-2">
-          <mat-icon>location_on</mat-icon>
-          <span>{{company.Address}}, {{company.City}}</span>
-        </div>
-        <div class="flex items-center gap-2">
-          <mat-icon>email</mat-icon>
-          <a href="mailto:{{company.Email}}" class="text-blue-600">{{company.Email}}</a>
-        </div>
-        <div class="flex items-center gap-2">
-          <mat-icon>phone</mat-icon>
-          <a href="https://wa.me/{{company.WhatsApp}}" class="text-blue-600">{{company.WhatsApp}}</a>
-        </div>
-        <div class="flex items-center gap-2">
-          <mat-icon>language</mat-icon>
-          <a href="{{company.Website}}" target="_blank" class="text-blue-600">{{company.Website}}</a>
+    <div class="p-6 flex flex-col md:flex-row gap-6">
+      <div class="w-full md:w-1/3">
+        <img [src]="company().Image" alt="Company Image" class="w-full h-64 object-cover rounded-lg shadow">
+        <!-- <input type="file" (change)="onImageChange($event)" class="mt-2"> -->
+      </div>
+      <div class="w-full md:w-2/3 space-y-4">
+        <!-- Name -->
+        <input *ngIf="editName()" (input)="updateName($event)" (blur)="editName.set(false)" value="{{company().Name}}"
+               class="font-bold text-3xl p-2 border border-gray-300 rounded-lg w-full" />
+        <h1 *ngIf="!editName()" class="text-3xl font-bold">
+          {{company().Name}}
+          <i (click)="editName.set(true)"
+             class="fa-regular fa-pen-to-square text-lg ml-1 hover:opacity-100 opacity-0 cursor-pointer"></i>
+        </h1>
+
+        <!-- Description -->
+        <textarea *ngIf="editDescription()" (input)="updateDescription($event)" (blur)="editDescription.set(false)" value="{{company().Description}}"
+                  class="w-full p-2 border border-gray-300 rounded-lg"></textarea>
+        <p *ngIf="!editDescription()" class="text-gray-600" (click)="editDescription.set(true)">
+          {{company().Description}}
+          <i class="fa-regular fa-pen-to-square text-lg ml-1 hover:opacity-100 opacity-0 cursor-pointer"></i>
+        </p>
+
+        <div class="space-y-2">
+          <!-- Address -->
+          <div class="flex items-center gap-2">
+            <mat-icon>location_on</mat-icon>
+            <input *ngIf="editAddress()" (input)="updateAddress($event)" (blur)="editAddress.set(false)" value="{{company().Address}}"
+                   class="p-2 border border-gray-300 rounded-lg" />
+            <input *ngIf="editAddress()" (input)="updateCity($event)" (blur)="editAddress.set(false)" value="{{company().City}}"
+                   class="p-2 border border-gray-300 rounded-lg" />
+            <span *ngIf="!editAddress()" (click)="editAddress.set(true)">
+              {{company().Address}}, {{company().City}}
+              <i class="fa-regular fa-pen-to-square text-lg ml-1 hover:opacity-100 opacity-0 cursor-pointer"></i>
+            </span>
+          </div>
+
+          <!-- Email -->
+          <div class="flex items-center gap-2">
+            <mat-icon>email</mat-icon>
+            <input *ngIf="editEmail()" (input)="updateEmail($event)" (blur)="editEmail.set(false)" value="{{company().Email}}"
+                   class="p-2 border border-gray-300 rounded-lg" />
+            <a *ngIf="!editEmail()" href="mailto:{{company().Email}}" class="text-blue-600" >
+              {{company().Email}}
+            </a>
+            <i (click)="editEmail.set(true)" *ngIf="!editEmail()"
+            class="fa-regular fa-pen-to-square text-lg ml-1 hover:opacity-100 opacity-0 cursor-pointer"></i>
+          </div>
+
+          <!-- WhatsApp -->
+          <div class="flex items-center gap-2">
+            <i class="fa-brands fa-whatsapp text-xl ml-1"></i>
+            <input *ngIf="editWhatsApp()" (input)="updateWhatsApp($event)" (blur)="editWhatsApp.set(false)" value="{{company().WhatsApp}}"
+                   class="p-2 border border-gray-300 rounded-lg" />
+            <a *ngIf="!editWhatsApp()" href="https://wa.me/{{company().WhatsApp}}" class="text-blue-600" >
+              {{company().WhatsApp}}
+            </a>
+            <i *ngIf="!editWhatsApp()" (click)="editWhatsApp.set(true)"
+            class="fa-regular fa-pen-to-square text-lg ml-1 hover:opacity-100 opacity-0 cursor-pointer"></i>
+          </div>
+
+          <!-- Website -->
+          <div class="flex items-center gap-2">
+            <mat-icon>language</mat-icon>
+            <input *ngIf="editWebsite()" (input)="updateWebsite($event)" (blur)="editWebsite.set(false)" value="{{company().Website}}"
+                   class="p-2 border border-gray-300 rounded-lg" value="{{company().Website}}" />
+            <a *ngIf="!editWebsite()" href="{{company().Website}}" target="_blank" class="text-blue-600">
+              {{company().Website}}
+            </a>
+            <i *ngIf="!editWebsite()" (click)="editWebsite.set(true)"
+            class="fa-regular fa-pen-to-square text-lg ml-1 hover:opacity-100 opacity-0 cursor-pointer"></i>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+    <button *ngIf="isCompanyModified()"
+    class="absolute p-2 right-36 bottom-2 bg-blue-500 hover:bg-blue-600 rounded-lg">Save</button>
+    <button class="absolute p-2 right-2 bottom-2 bg-red-500 hover:bg-red-600 rounded-lg">Delete Company</button>
 
-</div>
+  </div>
   <!-- your company properties -->
   <div class="mx-auto w-[90%] sm:w-[80%] my-5  shadow-lg rounded-xl">
 
     <!-- search -->
-     <app-search [data]="properties" (filteredData)="onFilteredData($event)" ></app-search>
-    <div class="w-[100%] m-5">
-      <h1 class="font-semibold text-2xl text-slate-600">Listed properties</h1>
-      <div class="flex flex-row justify-between items-center">
-        <p class="text-slate-400">205,354 property</p>
-      </div>
-    </div>
+    <app-search [data]="properties" (filteredData)="onFilteredData($event)" ></app-search>
+
     <!-- properties -->
+    <div class="w-[100%] m-5 flex flex-row ">
+      <div class="basis-[100%] flex flex-col">
+        <h1 class="font-semibold text-2xl text-slate-600">Listed properties</h1>
+        <div class="flex flex-row justify-between items-center">
+          <p class="text-slate-400">205,354 property</p>
+        </div>
+      </div>
+      <button class="bg-blue-500 hover:bg-blue-600 text-white mx-10 h-fit py-2 w-52 rounded-lg">Add Property <i class="fa-regular fa-plus-square"></i></button>
+    </div>
+
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
-      <app-property-card *ngFor="let property of properties" [property]="property"></app-property-card>
+      <!-- <app-property-card *ngFor="let property of properties" [property]="property"></app-property-card> -->
+      <div *ngFor="let property of properties" >
+        <div class="hover:scale-[102%] transition-transform duration-300">
+          <app-property-card [property]="property" ></app-property-card>
+        </div>
+        <!-- delte and edit buttons -->
+        <div class="flex justify-end space-x-2 items-center p-2">
+          <button class="bg-red-500 hover:bg-red-600 text-white p-2 rounded-lg">Delete <i class="fa-solid fa-trash"></i></button>
+          <button class="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-lg">Edit <i class="fa-regular fa-pen-to-square"></i></button>
+        </div>
+      </div>
     </div>
 
   </div>

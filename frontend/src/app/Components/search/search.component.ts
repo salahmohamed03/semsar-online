@@ -37,7 +37,7 @@ export class SearchComponent {
   });
 
   private _filteredData = computed<property[]|null>(() => {
-    console.log('Computing filtered data');
+    // console.log('Computing filtered data');
 
     const data = this._data();
     const query = this.searchQuery();
@@ -55,7 +55,7 @@ export class SearchComponent {
 
   constructor() {
     effect(() => {
-      console.log('Emitting filtered data');
+      // console.log('Emitting filtered data');
       this.filteredData.emit(this._filteredData());
     });
   }

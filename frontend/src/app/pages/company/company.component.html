@@ -1,0 +1,53 @@
+<div class="pt-20">
+  <!-- your company details -->
+  <div class="mx-auto w-[90%] sm:w-[80%]  my-3 shadow-lg rounded-xl">
+
+  <div class="p-6 flex flex-col md:flex-row gap-6">
+    <div class="w-full md:w-1/3">
+      <img [src]="company.Image" alt="Company Image" class="w-full h-64 object-cover rounded-lg shadow">
+    </div>
+    <div class="w-full md:w-2/3 space-y-4">
+      <h1 class="text-3xl font-bold">{{company.Name}}</h1>
+      <p class="text-gray-600">{{company.Description}}</p>
+      <div class="space-y-2">
+        <div class="flex items-center gap-2">
+          <mat-icon>location_on</mat-icon>
+          <span>{{company.Address}}, {{company.City}}</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <mat-icon>email</mat-icon>
+          <a href="mailto:{{company.Email}}" class="text-blue-600">{{company.Email}}</a>
+        </div>
+        <div class="flex items-center gap-2">
+          <mat-icon>phone</mat-icon>
+          <a href="https://wa.me/{{company.WhatsApp}}" class="text-blue-600">{{company.WhatsApp}}</a>
+        </div>
+        <div class="flex items-center gap-2">
+          <mat-icon>language</mat-icon>
+          <a href="{{company.Website}}" target="_blank" class="text-blue-600">{{company.Website}}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+  <!-- your company properties -->
+  <div class="mx-auto w-[90%] sm:w-[80%] my-5  shadow-lg rounded-xl">
+
+    <!-- search -->
+    <app-search [data]="properties" (filteredData)="onFilteredData($event)" ></app-search>
+
+    <!-- properties -->
+    <div class="w-[100%] m-5">
+      <h1 class="font-semibold text-2xl text-slate-600">Listed properties</h1>
+      <div class="flex flex-row justify-between items-center">
+        <p class="text-slate-400">205,354 property</p>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
+      <app-property-card *ngFor="let property of properties" [property]="property"></app-property-card>
+    </div>
+
+  </div>
+</div>

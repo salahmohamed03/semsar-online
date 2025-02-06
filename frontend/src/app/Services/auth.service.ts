@@ -84,20 +84,6 @@ export class AuthService {
       const exp = payload.exp;
       if (!exp) return true;
       const is_expired = Date.now() >= exp * 1000;
-
-      // if (is_expired) {
-      //   try {
-      //     const userDetails = this.getUserDetails();
-      //     const response = await firstValueFrom(this.RefreshToken(userDetails?.email));
-      //     if (response && response.isAuthenticated) {
-      //       localStorage.setItem('token', response.token);
-      //       return false;
-      //     }
-      //   } catch (error) {
-      //     this.logout();
-      //     return true;
-      //   }
-      // }
       return is_expired;
     } catch {
       return true;
