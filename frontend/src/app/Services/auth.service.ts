@@ -103,6 +103,16 @@ export class AuthService {
       return true;
     }
   }
+  public isValidToken():boolean{
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) return false;
+      const payload = jwtDecode<{exp: number}>(token);
+      return !!payload.exp;
+    } catch {
+      return false;
+    }
+  }
   public logout(){
     localStorage.removeItem('token');
   }

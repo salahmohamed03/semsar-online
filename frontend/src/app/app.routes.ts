@@ -8,6 +8,7 @@ import { ListwithusComponent } from './pages/listwithus/listwithus.component';
 import { companyGuard } from './Guards/company.guard';
 import { YourcompanyComponent } from './pages/yourcompany/yourcompany.component';
 import { profileGuard } from './Guards/profile.guard';
+import { ExploreComponent } from './pages/explore/explore.component';
 
 export const routes: Routes = [
   {
@@ -35,5 +36,9 @@ export const routes: Routes = [
   {
     path:'company',
     component: YourcompanyComponent,
+  },
+  {
+    path:'explore',
+    component: ExploreComponent,
   }
 ];

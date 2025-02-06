@@ -48,7 +48,12 @@ export class ListwithusComponent {
       Id: this.authService.getUserDetails()?.id,
       City: this.AddComanyForm.get('City')?.value,
       Address: this.AddComanyForm.get('Address')?.value,
-      Image: this.imageUrl
+      Image: this.imageUrl,
+      Name: this.authService.getUserDetails()?.username,
+      Description: '',
+      Email: this.authService.getUserDetails()?.email,
+      WhatsApp: '',
+      Website: ''
     }
     this.companyService.AddCompany(company).subscribe(
       {

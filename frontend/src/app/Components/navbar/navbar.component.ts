@@ -12,7 +12,7 @@ import { RouterLink } from '@angular/router';
 export class NavbarComponent {
   constructor(private authService:AuthService) { }
   isLoggedIn():boolean{
-    return this.authService.getToken() != null;
+    return this.authService.isValidToken();
   };
   logout(){
     this.authService.logout();

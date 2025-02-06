@@ -15,7 +15,7 @@ export class AppComponent {
   title = 'semsar-online';
 
   constructor(private router: Router) {
-    router.navigate(['/profile']);
+    router.navigate(['/company']);
   }
 
 }
