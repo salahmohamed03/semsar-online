@@ -43,12 +43,12 @@ export class SearchComponent {
     const query = this.searchQuery();
     if (!data) return null;
     return data.filter((property) => {
-      if (query.query && !property.description.includes(query.query)) return false;
+      if (query.query && !property.description?.includes(query.query)) return false;
       if (query.type && query.type !== 'any' && property.type !== query.type) return false;
       if (query.status && query.status !== 'any' && property.status !== query.status) return false;
-      if (query.minPrice && property.price < query.minPrice) return false;
-      if (query.maxPrice && property.price > query.maxPrice) return false;
-      if (query.minNoRooms && property.numberOfRooms < query.minNoRooms) return false;
+      if (query.minPrice && (!property.price || property.price < query.minPrice)) return false;
+      if (query.maxPrice && (!property.price || property.price > query.maxPrice)) return false;
+      if (query.minNoRooms && (!property.numberOfRooms || property.numberOfRooms < query.minNoRooms)) return false;
       return true;
     });
   });

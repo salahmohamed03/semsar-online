@@ -11,7 +11,7 @@ export interface companyProperty{
   status: string
 }
 export interface Company {
-  Id: string|undefined,
+  Id?: string|undefined,
   City?: string|undefined,
   Address?: string|undefined,
   Image?: string|ArrayBuffer|null|undefined,
