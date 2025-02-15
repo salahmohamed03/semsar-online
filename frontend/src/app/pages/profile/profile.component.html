@@ -1,19 +1,43 @@
 <div class="pt-20">
   <div class="h-60 bg-gradient-to-r from-slate-700 to-slate-400"></div>
-  <div class="relative h-96 w-[90%] md:w-[50%] mx-auto shadow-2xl bg-white -translate-y-28 rounded-3xl">
+  <div class="relative h-80 w-[90%] md:w-[50%] mx-auto shadow-2xl bg-white -translate-y-28 rounded-3xl">
     <!-- profile picture -->
-    <div class="h-36 w-36 rounded-full bg-red-300 mx-auto -translate-y-10 shadow-xl"></div>
+    <img class="h-36 w-36 rounded-full bg-red-300 mx-auto -translate-y-10 shadow-xl" src="{{emptyUserImage}}"/>
     <!-- personal data -->
     <div class= "-translate-y-10 m-5">
        <!-- name -->
        <h1 class="text-4xl text-center ">{{getUserDetails()?.username}}</h1>
-        <!-- email -->
-        <p class="text-center text-lg text-gray-300">{{getUserDetails()?.email}}</p>
-
      </div>
+     <!-- contact -->
+    <div class="flex flex-col justify-start px-16 -translate-y-10 space-y-4">
+      <div class="flex flex-row items-center justify-between space-x-2">
+        <div class="flex items-center space-x-2">
+          <i class="fa-solid fa-envelope text-xl"></i>
+          <span class="text-xl">{{getUserDetails()?.email}}</span>
+        </div>
+        <div class="flex items-center space-x-2">
+          <i class="fa-solid fa-heart text-xl"></i>
+          <span class="text-xl">Favorite: 18</span>
+        </div>
+      </div>
+      <div class="flex items-center space-x-2">
+        <i class="fa-solid fa-phone text-xl"></i>
+        <span class="text-xl">011138468543</span>
+      </div>
+    </div>
     <!-- logout -->
     <button (click)="logout()" class="absolute bottom-0 right-0 bg-red-500 text-white px-2 py-1 rounded-lg m-5">logout
       <fa-icon [icon]="faSignOutAlt"></fa-icon>
     </button>
   </div>
+
+  <!-- favorates properties-->
+   <div class="w-[95%] sm:w-[80%] mx-auto rounded-lg shadow-xl min-h-40 -translate-y-10">
+      <h1 class="text-3xl p-6">Favorates</h1>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
+        <app-property-card *ngFor="let property of properties" [property]="property"></app-property-card>
+      </div>
+
+   </div>
 </div>

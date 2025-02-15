@@ -10,6 +10,7 @@ import { YourcompanyComponent } from './pages/yourcompany/yourcompany.component'
 import { profileGuard } from './Guards/profile.guard';
 import { ExploreComponent } from './pages/explore/explore.component';
 import { PropertyComponent } from './pages/property/property.component';
+import { AboutComponent } from './pages/about/about.component';
 
 export const routes: Routes = [
   {
@@ -46,5 +47,9 @@ export const routes: Routes = [
   {
     path:'property',
     component: PropertyComponent,
+  },
+  {
+    path:'about',
+    component: AboutComponent,
   }
 ];

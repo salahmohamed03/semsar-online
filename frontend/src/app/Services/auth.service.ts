@@ -38,7 +38,10 @@ export class AuthService {
       })
     );
   }
-  public RefreshToken(Email: string |undefined):Observable<AuthResponse> {
+  public RefreshToken(Email?: string |undefined):Observable<AuthResponse> {
+    if(Email === undefined){
+      Email = this.getUserDetails()?.email;
+    }
     return this.http.post<AuthResponse>(`${this.apiUrl}/Auth/refreshToken`, { Email: Email },{withCredentials:true}).pipe(
       catchError((err: any): Observable<AuthResponse> => {
         console.error('Error:', err);

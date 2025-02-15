@@ -113,6 +113,7 @@
 
 
     <!-- reviews section -->
+
     <div class="w-[100%] flex flex-col flex-wrap border-2 border-gray-50 mt-5 shadow-xl p-6 order-4" dir="ltr">
       <div class="flex flex-wrap justify-between items-center mb-6">
         <div class="flex flex-row flex-wrap items-center my-2">
@@ -125,9 +126,31 @@
             <span class="ml-2 text-gray-500 text-nowrap">({{reviews().length}} reviews)</span>
           </div>
         </div>
-        <button class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
-          Write a Review
-        </button>
+      </div>
+      <!-- write a review  -->
+      <div class="w-[100%] rounded-lg shadow-lg mb-3 min-h-28">
+        <div class="flex flex-col p-4">
+          <h3 class="text-xl font-semibold text-gray-800 mb-2">Write a Review</h3>
+            <textarea class="w-full h-20 min-h-20 p-2 rounded-lg border-2 border-gray-200"
+             placeholder="Write your review here" [(ngModel)]="comment"></textarea>
+          <div class="flex justify-between items-center mt-4">
+            <div class="flex items-center space-x-2">
+              <span class="text-gray-600">Rate this property</span>
+              <div class="flex text-yellow-400">
+                <div class="text-nowrap">
+                    <i class="cursor-pointer fa-star" (click)="rating.set(1)" [ngClass]="{'fas': rating() >= 1, 'far': rating() < 1}"></i>
+                    <i class="cursor-pointer fa-star" (click)="rating.set(2)" [ngClass]="{'fas': rating() >= 2, 'far': rating() < 2}"></i>
+                    <i class="cursor-pointer fa-star" (click)="rating.set(3)" [ngClass]="{'fas': rating() >= 3, 'far': rating() < 3}"></i>
+                    <i class="cursor-pointer fa-star" (click)="rating.set(4)" [ngClass]="{'fas': rating() >= 4, 'far': rating() < 4}"></i>
+                    <i class="cursor-pointer fa-star" (click)="rating.set(5)" [ngClass]="{'fas': rating() >= 5, 'far': rating() < 5}"></i>
+                </div>
+              </div>
+            </div>
+            <button (click)="onSubmitReview()" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+              Submit
+            </button>
+          </div>
+        </div>
       </div>
 
       <div class="flex flex-col space-y-4">
