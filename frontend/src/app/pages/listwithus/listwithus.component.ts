@@ -25,7 +25,9 @@ export class ListwithusComponent {
     this.AddComanyForm = this.fb.group({
       City: ['', Validators.required],
       Address: ['', Validators.required],
-
+      Description: [''],
+      WhatsApp: [''],
+      Website: ['']
    });
   }
   onFileSelected(event: Event) {``
@@ -53,9 +55,10 @@ export class ListwithusComponent {
       Description: '',
       Email: this.authService.getUserDetails()?.email,
       WhatsApp: '',
-      Website: ''
+      Website: '',
+
     }
-    this.companyService.AddCompany(company).subscribe(
+    this.companyService.addCompany(company).subscribe(
       {
         next: (result) => {
           console.log("result: ",result);

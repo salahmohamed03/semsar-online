@@ -11,6 +11,12 @@
       <input type="file" placeholder="Company logo"
       (change)="onFileSelected($event)"
       class="p-2 rounded-md bg-slate-800 text-slate-200">
+      <input type="text" placeholder="Company description" formControlName="Description"
+        class="p-2 rounded-md bg-slate-800 text-slate-200">
+      <input type="text" placeholder="WhatsApp number" formControlName="WhatsApp"
+        class="p-2 rounded-md bg-slate-800 text-slate-200">
+      <input type="url" placeholder="Company website" formControlName="Website"
+        class="p-2 rounded-md bg-slate-800 text-slate-200">
       <!-- selected logo  -->
 
       <div *ngIf="imageUrl">

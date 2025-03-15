@@ -31,6 +31,20 @@ namespace Semsar_online.Data
                 new IdentityRole
                 { Id = Guid.NewGuid().ToString(), ConcurrencyStamp = Guid.NewGuid().ToString(), Name = "Company", NormalizedName = "COMPANY" }
                 );
+            modelBuilder.Entity<User>()
+                .HasData(
+                    new User
+                    {
+                        Id = Guid.NewGuid().ToString(),
+                        UserName = "admin",
+                        NormalizedUserName = "ADMIN",
+                        Email = "admin@gmail.com",
+                        NormalizedEmail = "ADMIN@GMAIL.COM",
+                        PasswordHash = new PasswordHasher<User>().HashPassword(null, "123"),
+                        SecurityStamp = string.Empty,
+                        EmailConfirmed = true
+                    }
+                );
 
             modelBuilder.Entity<User>()
                 .HasOne(u => u.Company)
