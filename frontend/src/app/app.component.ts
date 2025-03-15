@@ -29,7 +29,7 @@ export class AppComponent {
     }
     console.log('welcome to semsar online');
 
-    router.navigate(['/profile']);
+    // router.navigate(['/addproperty']);
   }
 
 }

@@ -1,44 +1,65 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment.development';
 import { Company } from '../Interfaces/company';
 import { Result } from '../Interfaces/result';
-import { AuthService } from './auth.service';
-import { map, Observable } from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
+import { Property } from '../Interfaces/property';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CompanyService {
-  apiurl = environment.apiUrl;
-  httpOptions :any;
-  constructor(private http:HttpClient,private auth: AuthService) {
-    this.httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${this.auth.getToken()}`
-      }),
-      withCredentials: true
-    };
+  private readonly apiUrl = environment.apiUrl;
+  private readonly endpoint = `${this.apiUrl}/Company`;
+
+  constructor(private http: HttpClient) {}
+
+  public getMyCompany(): Observable<Company> {
+    return this.http.get<Company>(`${this.endpoint}/GetMyCompany`)
+      .pipe(catchError(error => this.handleError(error)));
   }
 
-
-  getMyCompany(): Observable<Company> {
-    return this.http.get<Company>(`${this.apiurl}/Company/GetMyCompany`, {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${this.auth.getToken()}`
-      }),
-      withCredentials: true
-    });
+  public addCompany(company: Company): Observable<Result> {
+    return this.http.post<Result>(`${this.endpoint}/AddCompany`, company)
+      .pipe(catchError(error => this.handleError(error)));
   }
-  AddCompany(company:Company){
-    return this.http.post<Result>(`${this.apiurl}/Company/AddCompany`, company, {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${this.auth.getToken()}`
-      }),
-      withCredentials: true
-    });
+
+  public updateCompany(company: Company): Observable<Result> {
+    return this.http.put<Result>(`${this.endpoint}/UpdateCompany`, company)
+      .pipe(catchError(error => this.handleError(error)));
+  }
+
+  public deleteCompany(id: number): Observable<Result> {
+    return this.http.delete<Result>(`${this.endpoint}/DeleteCompany/${id}`)
+      .pipe(catchError(error => this.handleError(error)));
+  }
+
+  public getProperties(): Observable<Property[]> {
+    return this.http.get<Property[]>(`${this.endpoint}/GetProperties`)
+      .pipe(catchError(error => this.handleError(error)));
+  }
+
+  public deleteProperty(id: number): Observable<Result> {
+    return this.http.delete<Result>(`${this.endpoint}/DeleteProperty/${id}`)
+      .pipe(catchError(error => this.handleError(error)));
+  }
+
+  public updateProperty(property: Property): Observable<Result> {
+    return this.http.put<Result>(`${this.endpoint}/UpdateProperty`, property)
+      .pipe(catchError(error => this.handleError(error)));
+  }
+
+  handleError(error: any) {
+    let errorMessage = '';
+    if (error.error instanceof ErrorEvent) {
+      // Client-side error
+      errorMessage = `Error: ${error.error.message}`;
+    } else {
+      // Server-side error
+      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+    }
+    console.error(errorMessage);
+    return throwError(() => new Error(errorMessage));
   }
 }

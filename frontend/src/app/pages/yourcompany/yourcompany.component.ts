@@ -7,7 +7,7 @@ import { User } from '../../Interfaces/user';
 import { MatIconModule } from '@angular/material/icon';
 import { Company } from '../../Interfaces/company';
 import { CommonModule } from '@angular/common';
-import { property } from '../../Interfaces/property';
+import { Property } from '../../Interfaces/property';
 import { SearchComponent } from '../../Components/search/search.component';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
@@ -21,12 +21,12 @@ import { RouterLink } from '@angular/router';
 export class YourcompanyComponent {
 
 
-  onFilteredData($event: property[]|null) {
+  onFilteredData($event: Property[]|null) {
       this.filteredData.set($event);
       console.log($event);
 
   }
-  filteredData = signal<property[]|null>(null);
+  filteredData = signal<Property[]|null>(null);
 
 
   companyCopy = signal<Company>({
@@ -52,7 +52,7 @@ export class YourcompanyComponent {
       WhatsApp: '011-123-4567',
       Website: 'https://www.example.com'
   });
-  @Input() properties: property[] = [
+  @Input() properties: Property[] = [
     {
       id: 1,
       numberOfRooms: 4,

@@ -32,6 +32,7 @@ namespace Semsar_online.Models
         public string Status { get; set; }
 
         public bool deleted { get; set; } = false;
+        public string[] Images {get;set;}
         public DateTime? DeletedAt { get; set; }
 
         public void Delete()

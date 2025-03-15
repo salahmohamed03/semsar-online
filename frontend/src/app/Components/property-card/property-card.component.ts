@@ -1,6 +1,6 @@
 import { map } from 'rxjs';
 import { Component, Input } from '@angular/core';
-import { property } from '../../Interfaces/property';
+import { Property } from '../../Interfaces/property';
 import { ImageSliderComponent } from '../image-slider/image-slider.component';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
@@ -12,7 +12,7 @@ import { RouterLink } from '@angular/router';
   styleUrl: './property-card.component.css'
 })
 export class PropertyCardComponent {
-  @Input() property: property = {
+  @Input() property: Property = {
     id: 1,
     numberOfRooms: 4,
     area: 2000,

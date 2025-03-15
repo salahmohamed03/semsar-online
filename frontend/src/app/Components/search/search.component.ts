@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component ,Input, Output, signal ,computed, effect, EventEmitter} from '@angular/core';
-import { property } from '../../Interfaces/property';
+import { Property } from '../../Interfaces/property';
 
 
 interface SearchQuery {
@@ -20,12 +20,12 @@ interface SearchQuery {
   styleUrl: './search.component.css'
 })
 export class SearchComponent {
-  @Input() set data(value: property[]|null) {
+  @Input() set data(value: Property[]|null) {
     this._data.set(value);
   }
-  private _data = signal<property[]|null>(null);
+  private _data = signal<Property[]|null>(null);
 
-  @Output() filteredData = new EventEmitter<property[]|null>();
+  @Output() filteredData = new EventEmitter<Property[]|null>();
 
   private searchQuery = signal<SearchQuery>({
     query: '',
@@ -36,7 +36,7 @@ export class SearchComponent {
     minNoRooms: null
   });
 
-  private _filteredData = computed<property[]|null>(() => {
+  private _filteredData = computed<Property[]|null>(() => {
     // console.log('Computing filtered data');
 
     const data = this._data();

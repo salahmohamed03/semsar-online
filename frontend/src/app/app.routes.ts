@@ -11,6 +11,9 @@ import { profileGuard } from './Guards/profile.guard';
 import { ExploreComponent } from './pages/explore/explore.component';
 import { PropertyComponent } from './pages/property/property.component';
 import { AboutComponent } from './pages/about/about.component';
+import { AddPropertyComponent } from './pages/add-property/add-property.component';
+import { EditPropertyComponent } from './pages/edit-property/edit-property.component';
+import { AdminDashboardComponent } from './pages/admin-dashboard/admin-dashboard.component';
 
 export const routes: Routes = [
   {
@@ -51,5 +54,17 @@ export const routes: Routes = [
   {
     path:'about',
     component: AboutComponent,
+  },
+  {
+    path:'addproperty',
+    component: AddPropertyComponent,
+  },
+  {
+    path:'editproperty',
+    component: EditPropertyComponent,
+  },
+  {
+    path:'admin',
+    component: AdminDashboardComponent,
   }
 ];

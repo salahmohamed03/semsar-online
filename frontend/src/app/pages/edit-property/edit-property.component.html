@@ -1,0 +1,252 @@
+<div class="pt-20">
+  <div class="mx-auto w-[90%] md:w-[80%] shadow-xl">
+    <div class="bg-white p-5">
+      <h1 class="text-2xl font-bold text-center">Edit Property</h1>
+      <form class="mt-6 space-y-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <!-- Property Type -->
+          <div>
+            <label for="type" class="block text-sm font-medium text-gray-700">Property Type</label>
+            <select
+              id="type"
+              name="type"
+              [(ngModel)]="property.type"
+              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            >
+              <option value="" disabled>Select type</option>
+              <option value="apartment">Apartment</option>
+              <option value="house">House</option>
+              <option value="villa">Villa</option>
+              <option value="land">Land</option>
+            </select>
+          </div>
+
+          <!-- Price -->
+          <div>
+            <label for="price" class="block text-sm font-medium text-gray-700">Price (EGP)</label>
+            <input
+              type="number"
+              id="price"
+              name="price"
+              [(ngModel)]="property.price"
+              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            />
+          </div>
+
+          <!-- Down Payment -->
+          <div>
+            <label for="downPayment" class="block text-sm font-medium text-gray-700">Down Payment (EGP)</label>
+            <input
+              type="number"
+              id="downPayment"
+              name="downPayment"
+              [(ngModel)]="property.downPayment"
+              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            />
+          </div>
+
+          <!-- Rooms -->
+          <div>
+            <label for="rooms" class="block text-sm font-medium text-gray-700">Number of Rooms</label>
+            <input
+              type="number"
+              id="rooms"
+              name="rooms"
+              [(ngModel)]="property.rooms"
+              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            />
+          </div>
+
+          <!-- Area -->
+          <div>
+            <label for="area" class="block text-sm font-medium text-gray-700">Area (m²)</label>
+            <input
+              type="number"
+              id="area"
+              name="area"
+              [(ngModel)]="property.area"
+              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            />
+          </div>
+
+          <!-- Location -->
+          <div>
+            <label for="location" class="block text-sm font-medium text-gray-700">Location</label>
+            <input
+              type="text"
+              id="location"
+              name="location"
+              [(ngModel)]="property.location"
+              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            />
+          </div>
+
+          <!-- Status -->
+          <div>
+            <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
+            <select
+              id="status"
+              name="status"
+              [(ngModel)]="property.status"
+              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            >
+              <option value="" disabled>Select status</option>
+              <option value="for-sale">For Sale</option>
+              <option value="for-rent">For Rent</option>
+              <option value="sold">Sold</option>
+              <option value="rented">Rented</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Description -->
+        <div>
+          <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
+          <textarea
+            id="description"
+            name="description"
+            rows="4"
+            [(ngModel)]="property.description"
+            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+          ></textarea>
+        </div>
+
+        <div class="flex flex-col md:flex-row gap-6">
+          <!-- Current Images -->
+          <div class="w-full md:w-1/2">
+            <h3 class="text-lg font-medium text-gray-700 mb-2">Current Images</h3>
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
+              <div *ngFor="let image of property.images; let i = index" class="relative group">
+                <img
+                  [src]="getImageUrl(image)"
+                  alt="Property image"
+                  class="h-24 w-full object-cover rounded-md"
+                />
+                <button
+                  type="button"
+                  (click)="removeExistingImage(i)"
+                  class="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Add New Images -->
+          <div class="w-full md:w-1/2">
+            <h3 class="text-lg font-medium text-gray-700 mb-2">Add New Images</h3>
+            <div
+              (dragover)="onDragOver($event)"
+              (dragleave)="onDragLeave($event)"
+              (drop)="onDrop($event)"
+              class="flex items-center justify-center w-full h-32 px-4 border-2 border-dashed rounded-lg transition-all duration-200"
+              [class.border-indigo-500]="isDragging"
+              [class.bg-indigo-50]="isDragging"
+              [class.border-gray-300]="!isDragging"
+              [class.bg-gray-50]="!isDragging"
+              [class.hover:bg-gray-100]="!isDragging"
+            >
+              <div class="space-y-2 text-center">
+                <div class="flex justify-center">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="w-10 h-10"
+                    [class.text-indigo-500]="isDragging"
+                    [class.text-gray-400]="!isDragging"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                    />
+                  </svg>
+                </div>
+                <p
+                  class="text-sm"
+                  [class.text-indigo-600]="isDragging"
+                  [class.text-gray-500]="!isDragging"
+                >
+                  <span class="font-medium">{{
+                    isDragging ? "Drop files here" : "Click to upload"
+                  }}</span>
+                  {{ !isDragging ? " or drag and drop" : "" }}
+                </p>
+                <p class="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
+              </div>
+            </div>
+            <input
+              id="file-upload"
+              name="file-upload"
+              type="file"
+              multiple
+              accept="image/*"
+              class="hidden"
+              (change)="onFileUpload($event)"
+            />
+          </div>
+        </div>
+
+        <!-- Preview of newly added images -->
+        <div
+          *ngIf="selectedFiles && selectedFiles.length > 0"
+          class="mt-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2"
+        >
+          <div
+            *ngFor="let file of selectedFiles; let i = index"
+            class="relative group"
+          >
+            <img
+              [src]="previewUrls[i]"
+              alt="Preview"
+              class="h-24 w-full object-cover rounded-md"
+            />
+            <button
+              type="button"
+              (click)="removeFile(i)"
+              class="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-4 w-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="flex justify-between">
+          <button
+            type="button"
+            (click)="cancel()"
+            class="px-6 py-3 bg-gray-200 text-gray-800 font-medium rounded-md shadow hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500"
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            (click)="saveChanges()"
+            class="px-6 py-3 bg-indigo-600 text-white font-medium rounded-md shadow hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          >
+            Save Changes
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

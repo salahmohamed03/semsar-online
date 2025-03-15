@@ -1,12 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace Semsar_online.DTO_s
 {
     public class PropertyDTO
     {
         public int Id { get; set; }
-        [Required]
-        public string SellerId { get; set; }
         [Required]
         public int NumberOfRooms { get; set; }
         [Required]
@@ -24,5 +23,7 @@ namespace Semsar_online.DTO_s
         public int DownPayment { get; set; }
         [Required]
         public string Status { get; set; }
+        [Required]
+        public string[] Images {get;set;}
     }
 }

@@ -1,31 +1,41 @@
 import { HttpInterceptorFn } from '@angular/common/http';
-import { inject, Inject } from '@angular/core';
-import { environment } from '../../environments/environment.development';
+import { inject } from '@angular/core';
 import { AuthService } from '../Services/auth.service';
-import { catchError } from 'rxjs';
-
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
-
   const authService = inject(AuthService);
-  if(needsAutherization(req.url))
-    return next(req);
 
-  const token = localStorage.getItem('token');
+  // Skip authentication for public endpoints
+  if(isPublicEndpoint(req.url)) {
+    return next(req);
+  }
+
+  // Get token from service rather than directly from localStorage
+  const token = authService.getToken();
 
   if (token) {
-  // console.log('token:', token?.at(0));
-
     req = req.clone({
       setHeaders: {
         Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
       },
+      withCredentials: true
     });
   }
+
   return next(req);
 };
-const needsAutherization = (url:string)=>{
-  const includeUrls:string[]=[];
-  return includeUrls.some(x => x === url);
+
+// Function to determine if a URL is a public endpoint that doesn't need auth
+const isPublicEndpoint = (url: string): boolean => {
+  const publicUrls: string[] = [
+    '/auth/login',
+    '/auth/register',
+    '/auth/forgot-password',
+    '/properties/public'
+    // Add other public endpoints
+  ];
+
+  return publicUrls.some(publicUrl => url.includes(publicUrl));
 };
 

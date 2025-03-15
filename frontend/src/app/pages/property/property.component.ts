@@ -1,6 +1,6 @@
 import { Component, computed, effect, signal } from '@angular/core';
 import { ImageSliderComponent } from '../../Components/image-slider/image-slider.component';
-import { property } from '../../Interfaces/property';
+import { Property } from '../../Interfaces/property';
 import { Review } from '../../Interfaces/review';
 import { CommonModule } from '@angular/common';
 import { ReviewComponent } from '../../Components/review/review.component';
@@ -17,7 +17,7 @@ import { environment } from '../../../environments/environment.development';
 export class PropertyComponent {
   constructor(private authService: AuthService) {
   }
-  property: property = {
+  property: Property = {
     id: 1,
     numberOfRooms: 4,
     area: 2000,

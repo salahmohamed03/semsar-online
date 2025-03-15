@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Semsar_online.Data;
 using Semsar_online.DTO_s;
+using Semsar_online.HelplerClasses;
 using Semsar_online.Models;
 using Semsar_online.Services.Interfaces;
 using System.Drawing;
@@ -43,9 +44,11 @@ namespace Semsar_online.Services.Classes
             var company = new Company()
             {
                 Id = dto.Id,
+                Name = dto.Name,
                 City = dto.City,
                 Address = dto.Address,
-                Image = img
+                Image = img,
+                Description = dto.Description
             };
             await _context.Companies.AddAsync(company);
             await _context.SaveChangesAsync();
@@ -73,6 +76,8 @@ namespace Semsar_online.Services.Classes
                     City = x.City,
                     Id = x.Id,
                     Image = x.Image,
+                    Description = x.Description,
+                    Name = x.Name
                 })
                 .FirstOrDefault(predicate);
             if (company == null)
@@ -86,18 +91,7 @@ namespace Semsar_online.Services.Classes
                 return null;
             return await _context.Properties
                 .Where(x => x.SellerId == id)
-                .Select(p => new PropertyDTO()
-                {
-                    Id = p.Id,
-                    Area = p.Area,
-                    DownPayment = p.DownPayment,
-                    ListingDate = p.ListingDate,
-                    Price = p.Price,
-                    NumberOfRooms = p.NumberOfRooms,
-                    Description = p.Description,
-                    Type = p.Type,
-                    SellerId = p.SellerId
-                })
+                .Select(p => p.ToDTO())
                 .ToListAsync();
         }
 
@@ -105,11 +99,16 @@ namespace Semsar_online.Services.Classes
         {
             if(!CompanyExists(dto.Id))
                 return new ResultDTO("Company does not exist");
+            SaveImage(dto.Image,dto.Id);
+            var img = GetImage(dto.Id);
             _context.Companies.Update(new Company()
             {
                 Id = dto.Id,
                 City = dto.City,
-                Address = dto.Address
+                Address = dto.Address,
+                Name = dto.Name,
+                Description =dto.Description,
+                Image = img
             });
             await _context.SaveChangesAsync();
             return new ResultDTO("Company updated successfully", true);
@@ -129,7 +128,7 @@ namespace Semsar_online.Services.Classes
                 NumberOfRooms = dto.NumberOfRooms,
                 Description = dto.Description,
                 Type = dto.Type,
-                SellerId = dto.SellerId
+                // Images = dto.Images
             });
             await _context.SaveChangesAsync();
             return new ResultDTO("Property updated successfully", true);
@@ -152,9 +151,9 @@ namespace Semsar_online.Services.Classes
         {
             return Path.Combine("http://localhost:5122/uploads/", $"{id}co.jpg");
         }
-        public async Task<ResultDTO> AddProperty(PropertyDTO dto)
+        public async Task<ResultDTO> AddProperty(PropertyDTO dto, string SellerId)
         {
-            if (!CompanyExists(dto.SellerId))
+            if (!CompanyExists(SellerId))
                 return new ResultDTO("Company does not exist");
             var property = new Property()
             {
@@ -165,11 +164,21 @@ namespace Semsar_online.Services.Classes
                 NumberOfRooms = dto.NumberOfRooms,
                 Description = dto.Description,
                 Type = dto.Type,
-                SellerId = dto.SellerId
+                SellerId = SellerId
             };
             await _context.Properties.AddAsync(property);
             await _context.SaveChangesAsync();
             return new ResultDTO("Property added successfully", true);
+        }
+
+        public async Task<ResultDTO> DeleteCompany(string id)
+        {
+            var company = _context.Companies.FirstOrDefault(x => x.Id == id);
+            if (company == null)
+                return new ResultDTO("Company does not exist");
+            _context.Companies.Remove(company);
+            await _context.SaveChangesAsync();
+            return new ResultDTO("Company deleted successfully", true);
         }
     }
 }

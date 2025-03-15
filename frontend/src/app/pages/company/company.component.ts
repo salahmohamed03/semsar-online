@@ -4,7 +4,7 @@ import { PropertyCardComponent } from '../../Components/property-card/property-c
 import { MatIconModule } from '@angular/material/icon';
 import { Company } from '../../Interfaces/company';
 import { CommonModule } from '@angular/common';
-import { property } from '../../Interfaces/property';
+import { Property } from '../../Interfaces/property';
 import { SearchComponent } from '../../Components/search/search.component';
 @Component({
   selector: 'app-company',
@@ -16,12 +16,12 @@ import { SearchComponent } from '../../Components/search/search.component';
 export class companyComponent {
 
 
-  onFilteredData($event: property[]|null) {
+  onFilteredData($event: Property[]|null) {
       this.filteredData.set($event);
       // console.log($event);
 
   }
-  filteredData = signal<property[]|null>(null);
+  filteredData = signal<Property[]|null>(null);
 
 
   @Input() company:Company = {
@@ -35,7 +35,7 @@ export class companyComponent {
       WhatsApp: '011-123-4567',
       Website: 'https://www.example.com'
   }
-  @Input() properties: property[] = [
+  @Input() properties: Property[] = [
     {
       id: 1,
       numberOfRooms: 4,

@@ -5,7 +5,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AuthService } from '../../Services/auth.service';
 import {environment} from '../../../environments/environment.development';
 import { PropertyCardComponent } from '../../Components/property-card/property-card.component';
-import { property } from '../../Interfaces/property';
+import { Property } from '../../Interfaces/property';
 import { CommonModule } from '@angular/common';
 // for routing
 import { Router } from '@angular/router';
@@ -20,7 +20,7 @@ export class ProfileComponent {
   faSignOutAlt = faSignOutAlt;
   emptyUserImage = environment.emptyUserImage;
   constructor(private authService:AuthService,private router:Router ) {}
-  public properties: property[] = [
+  public properties: Property[] = [
         {
           id: 1,
           numberOfRooms: 4,

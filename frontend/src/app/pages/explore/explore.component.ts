@@ -1,5 +1,5 @@
 import { Input, signal, Component } from '@angular/core';
-import { property } from '../../Interfaces/property';
+import { Property } from '../../Interfaces/property';
 import { SearchComponent } from '../../Components/search/search.component';
 import { PropertyCardComponent } from '../../Components/property-card/property-card.component';
 import { CommonModule } from '@angular/common';
@@ -12,14 +12,14 @@ import { CommonModule } from '@angular/common';
   styleUrl: './explore.component.css'
 })
 export class ExploreComponent {
-  onFilteredData($event: property[]|null) {
+  onFilteredData($event: Property[]|null) {
         this.filteredData.set($event);
         // console.log($event);
 
     }
-    filteredData = signal<property[]|null>(null);
+    filteredData = signal<Property[]|null>(null);
 
-    public properties: property[] = [
+    public properties: Property[] = [
       {
         id: 1,
         numberOfRooms: 4,

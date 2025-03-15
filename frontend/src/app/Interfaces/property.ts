@@ -1,6 +1,6 @@
 import { Company } from "./company";
 
-export interface property{
+export interface Property{
   id?: 1,
   numberOfRooms?: 4,
   area?: 2000,

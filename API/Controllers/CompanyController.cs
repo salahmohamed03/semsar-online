@@ -86,16 +86,31 @@ namespace Semsar_online.Controllers
         [NonAction]
         private string? getUserIdFromToken()
         {
-            var token = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
-            var handler = new JwtSecurityTokenHandler();
-            var jsonToken = handler.ReadToken(token);
-            var tokenS = handler.ReadToken(token) as JwtSecurityToken;
-            return tokenS?.Claims.First(claim => claim.Type == "uid").Value;
+            // var token = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+            // var handler = new JwtSecurityTokenHandler();
+            // var jsonToken = handler.ReadToken(token);
+            // var tokenS = handler.ReadToken(token) as JwtSecurityToken;
+            // return tokenS?.Claims.First(claim => claim.Type == "uid").Value;
+            var userId = User.Claims.FirstOrDefault(x => x.Type == "uid")?.Value;
+            return userId;
         }
         [HttpPost("AddProperty")]
         public async Task<IActionResult> AddProperty(PropertyDTO dto)
         {
-            var result = await _companyService.AddProperty(dto);
+            var userId = getUserIdFromToken();
+            if(userId is null){
+                return BadRequest(new ResultDTO("user id doesn't exist"));
+            }
+            var result = await _companyService.AddProperty(dto ,userId);
+            if (result.IsSuccess)
+                return Ok(result);
+
+            return BadRequest(result);
+        }
+        [HttpDelete("DeleteCompany")]
+        public async Task<IActionResult> DeleteCompany(string id)
+        {
+            var result = await _companyService.DeleteCompany(id);
             if (result.IsSuccess)
                 return Ok(result);
 
